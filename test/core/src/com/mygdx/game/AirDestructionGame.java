@@ -29,4 +29,6 @@ public class AirDestructionGame extends ApplicationAdapter {
 		batch.dispose();
 		img.dispose();
 	}
+	
+	//Comentario de prueba
 }
