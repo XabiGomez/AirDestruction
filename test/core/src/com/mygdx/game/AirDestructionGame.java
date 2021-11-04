@@ -19,6 +19,7 @@ public class AirDestructionGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
+		System.out.println("yaaaaaaaaaaaaaaaaaa");
 		batch.draw(img, 0, 0);
 		batch.end();
 	}
