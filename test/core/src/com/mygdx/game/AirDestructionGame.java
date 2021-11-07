@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import entidades.Jugador;
 import ventanas.AbstractScreen;
 
-public class AirDestructionGame extends ApplicationAdapter {
+public class AirDestructionGame extends Game{
 	SpriteBatch batch;
 	Texture img, img2;
 	Jugador jugador = new Jugador(10, 10, 300, 300, 3, 3);;
