@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.AirDestructionGame;
 
+import entidades.Jugador;
+
 public class GameScreen extends AbstractScreen {
 	private SpriteBatch batch;
 	private Texture texture;
