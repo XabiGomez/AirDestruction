@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import entidades.Jugador;
 import ventanas.AbstractScreen;
+import ventanas.MenuScreen;
 
 public class AirDestructionGame extends Game{
 	SpriteBatch batch;
@@ -23,6 +24,8 @@ public class AirDestructionGame extends Game{
 		
 		GameScreen = new ventanas.GameScreen(this);
 		setScreen(GameScreen);
+		/*MenuScreen MenuScreen = new ventanas.MenuScreen(this);
+		setScreen(MenuScreen);*/
 	}
 
 	/*@Override

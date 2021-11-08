@@ -17,6 +17,7 @@ public class GameScreen extends AbstractScreen {
 	private Texture jug;
 	private Jugador player;
 	int posyjugador = 100;
+	private int movimientoPantalla=0;
 	private int tamainodisparoaliado=32,veldisparoaliado=10;
 	float enfriamientodisparo= 0.1f;
 	float tiempodisparo=5;
@@ -39,7 +40,13 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 
         batch.begin(); 
-        batch.draw(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
+        //Habra que cambiar la pantalla para que no se vea tan mal
+        movimientoPantalla++;
+        if(movimientoPantalla % Gdx.graphics.getHeight()==0) {
+        	movimientoPantalla = 0;
+        }
+        batch.draw(texture, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
+        batch.draw(texture, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if(disparoaliado!=null&&disparoaliado.size()!=0) {
         	for (int i = 0; i < disparoaliado.size(); ++i) {
         		batch.draw(disparoaliado.get(i).getTextura(), disparoaliado.get(i).getX(), disparoaliado.get(i).getY(), disparoaliado.get(i).gettamaino(), disparoaliado.get(i).gettamaino());
