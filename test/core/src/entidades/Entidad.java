@@ -6,13 +6,14 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class Entidad implements Disposable{
 
-	private int vida, velocidad;
+	private int vida, velocidadX, velocidadY;
 	protected Texture textura;
 	protected Sprite sprite;
 	
-	public Entidad(float x, float y , float altura, float anchura, int vida, int velocidad,Texture textura) {
+	public Entidad(float x, float y , float altura, float anchura, int vida, int velocidadX, int velocidadY, Texture textura) {
 		this.vida = vida;
-		this.velocidad = velocidad;
+		this.velocidadX = velocidadX;
+		this.velocidadY = velocidadY;
 		this.textura=textura;
 		this.sprite= new Sprite(textura);
 		sprite.setX(x);
@@ -61,12 +62,6 @@ public class Entidad implements Disposable{
 	public void setVida(int vida) {
 		this.vida = vida;
 	}
-
-	public int getVelocidad() {
-		return velocidad;
-	}
-	
-	
 	
 	public Texture getTextura() {
 		return textura;
@@ -83,17 +78,30 @@ public class Entidad implements Disposable{
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
 	}
-
-	public void setVelocidad(int velocidad) {
-		this.velocidad = velocidad;
+	
+	public int getVelocidadX() {
+		return velocidadX;
 	}
+
+	public void setVelocidadX(int velocidadX) {
+		this.velocidadX = velocidadX;
+	}
+
+	public int getVelocidadY() {
+		return velocidadY;
+	}
+
+	public void setVelocidadY(int velocidadY) {
+		this.velocidadY = velocidadY;
+	}
+
 	public String toString() {
 		return "X: "+this.getX()+" Y: "+this.getY()+" altura: "+this.getAltura()+" anchura: "+this.getAnchura();
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stubç
+		// TODO Auto-generated method stubÃ§
 		textura.dispose();
 	}
 }
