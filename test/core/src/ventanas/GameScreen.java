@@ -13,7 +13,8 @@ import entidades.*;
 
 public class GameScreen extends AbstractScreen {
 	private SpriteBatch batch;
-	private Texture texture;
+	private Texture fondo;
+	private Texture fondo2;
 	private Texture jug;
 	private Jugador player;
 	int posyjugador = 100;
@@ -29,7 +30,8 @@ public class GameScreen extends AbstractScreen {
 	
 	public void show() {
 		batch = new SpriteBatch();
-		texture = new Texture("GameFondo.jpg");
+		fondo = new Texture("GameFondo.jpg");
+		fondo2 = new Texture("GameFondo2.jpg");
 		jug = new Texture("snorlax.png");
 		player = new Jugador(calcularmitadpantX(),posyjugador,100,100,0,200,jug);
 
@@ -45,9 +47,10 @@ public class GameScreen extends AbstractScreen {
         movimientoPantalla++;
         if(movimientoPantalla % Gdx.graphics.getHeight()==0) {
         	movimientoPantalla = 0;
+        	fondo = fondo2;
         }
-        batch.draw(texture, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
-        batch.draw(texture, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(fondo, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
+        batch.draw(fondo2, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if(disparoaliado!=null&&disparoaliado.size()!=0) {
         	for (int i = 0; i < disparoaliado.size(); ++i) {
         		batch.draw(disparoaliado.get(i).getTextura(), disparoaliado.get(i).getX(), disparoaliado.get(i).getY(), disparoaliado.get(i).gettamaino(), disparoaliado.get(i).gettamaino());
