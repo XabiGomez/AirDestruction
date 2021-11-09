@@ -31,7 +31,8 @@ public class GameScreen extends AbstractScreen {
 		batch = new SpriteBatch();
 		texture = new Texture("GameFondo.jpg");
 		jug = new Texture("snorlax.png");
-		player = new Jugador(calcularmitadpantX(),posyjugador,100,100,0,200);
+		player = new Jugador(calcularmitadpantX(),posyjugador,100,100,0,200,jug);
+
 	}
 	
 	@Override
@@ -52,9 +53,11 @@ public class GameScreen extends AbstractScreen {
         		batch.draw(disparoaliado.get(i).getTextura(), disparoaliado.get(i).getX(), disparoaliado.get(i).getY(), disparoaliado.get(i).gettamaino(), disparoaliado.get(i).gettamaino());
         	}
         }
-        batch.draw(jug, player.getX(),posyjugador,player.getAnchura(),player.getAltura());
+        batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
         batch.end(); 
-	entradadatos();
+        entradadatos();
+        System.out.println(player);
+	
     }
 	
     public void entradadatos() {
