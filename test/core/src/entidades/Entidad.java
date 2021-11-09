@@ -1,51 +1,57 @@
 package entidades;
 
-public class Entidad {
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Disposable;
 
-	float x, y;
-	int altura, anchura;
-	int vida, velocidad;
+public class Entidad implements Disposable{
+
+	private int vida, velocidad;
+	protected Texture textura;
+	protected Sprite sprite;
 	
-	public Entidad(float x, float y , int altura, int anchura, int vida, int velocidad) {
-		this.x = x;
-		this.y = y;
-		this.altura = altura;
-		this.anchura = anchura;
+	public Entidad(float x, float y , float altura, float anchura, int vida, int velocidad,Texture textura) {
 		this.vida = vida;
 		this.velocidad = velocidad;
+		this.textura=textura;
+		this.sprite= new Sprite(textura);
+		sprite.setX(x);
+		sprite.setY(y);
+		sprite.setSize(anchura, altura);
+		sprite.setScale(anchura, altura);
 		
 	}
 
 	public float getX() {
-		return x;
+		return sprite.getX();
 	}
 
 	public void setX(float x) {
-		this.x = x;
+		sprite.setX(x);
 	}
 
 	public float getY() {
-		return y;
+		return sprite.getY();
 	}
 
 	public void setY(float y) {
-		this.y = y;
+		sprite.setY(y);
 	}
 
-	public int getAltura() {
-		return altura;
+	public float getAltura() {
+		return sprite.getHeight();
 	}
 
-	public void setAltura(int altura) {
-		this.altura = altura;
+	public void setAltura(float altura) {
+		sprite.setScale(this.getAnchura(), altura);
 	}
 
-	public int getAnchura() {
-		return anchura;
+	public float getAnchura() {
+		return sprite.getWidth();
 	}
 
-	public void setAnchura(int anchura) {
-		this.anchura = anchura;
+	public void setAnchura(float anchura) {
+		sprite.setSize(anchura, this.getAltura());
 	}
 
 	public int getVida() {
@@ -59,13 +65,36 @@ public class Entidad {
 	public int getVelocidad() {
 		return velocidad;
 	}
+	
+	
+	
+	public Texture getTextura() {
+		return textura;
+	}
+
+	public void setTextura(Texture textura) {
+		this.textura = textura;
+	}
+
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
 
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
+	public String toString() {
+		return "X: "+this.getX()+" Y: "+this.getY()+" altura: "+this.getAltura()+" anchura: "+this.getAnchura();
+	}
 
-	public void move(float x, float y) {
-		this.setX(x);
-		this.setY(y);
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stubç
+		textura.dispose();
 	}
 }
+
