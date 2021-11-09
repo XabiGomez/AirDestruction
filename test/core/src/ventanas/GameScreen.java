@@ -56,8 +56,6 @@ public class GameScreen extends AbstractScreen {
         batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
         batch.end(); 
         entradadatos();
-        System.out.println(player);
-	
     }
 	
     public void entradadatos() {
