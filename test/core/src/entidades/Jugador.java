@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Jugador extends Entidad{
 	
-	public Jugador(float x, float y , int altura, int anchura, int vida, int velocidad,Texture textura) {
-		super(x, y, altura, anchura, vida, velocidad,textura);
+	public Jugador(float x, float y , float altura, float anchura, int vida, int velocidadX, int velocidadY, Texture textura) {
+		super(x, y, altura, anchura, vida, velocidadX, velocidadY, textura);
 		
 	}
 	
