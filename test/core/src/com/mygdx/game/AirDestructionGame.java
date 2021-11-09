@@ -11,16 +11,11 @@ import ventanas.MenuScreen;
 
 public class AirDestructionGame extends Game{
 	SpriteBatch batch;
-	Texture img, img2;
-	Jugador jugador = new Jugador(10, 10, 300, 300, 3, 3);;
-	
 	public AbstractScreen GameScreen;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-		img2 = new Texture("snorlax.png");
 		
 		GameScreen = new ventanas.GameScreen(this);
 		setScreen(GameScreen);
@@ -40,7 +35,6 @@ public class AirDestructionGame extends Game{
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 
 }
