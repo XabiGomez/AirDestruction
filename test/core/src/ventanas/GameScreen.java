@@ -13,8 +13,7 @@ import entidades.*;
 
 public class GameScreen extends AbstractScreen {
 	private SpriteBatch batch;
-	private Texture fondo;
-	private Texture fondo2;
+	private Texture texture;
 	private Texture jug;
 	private Jugador player;
 	int posyjugador = 100;
@@ -30,10 +29,9 @@ public class GameScreen extends AbstractScreen {
 	
 	public void show() {
 		batch = new SpriteBatch();
-		fondo = new Texture("GameFondo.jpg");
-		fondo2 = new Texture("GameFondo2.jpg");
+		texture = new Texture("GameFondo.jpg");
 		jug = new Texture("snorlax.png");
-		player = new Jugador(calcularmitadpantX(),posyjugador,100,100,0,200,jug);
+		player = new Jugador(calcularmitadpantX(),posyjugador,100,100,0,200,0,jug);
 
 	}
 	
@@ -47,18 +45,18 @@ public class GameScreen extends AbstractScreen {
         movimientoPantalla++;
         if(movimientoPantalla % Gdx.graphics.getHeight()==0) {
         	movimientoPantalla = 0;
-        	fondo = fondo2;
         }
-        batch.draw(fondo, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
-        batch.draw(fondo2, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(texture, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
+        batch.draw(texture, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if(disparoaliado!=null&&disparoaliado.size()!=0) {
         	for (int i = 0; i < disparoaliado.size(); ++i) {
-        		batch.draw(disparoaliado.get(i).getTextura(), disparoaliado.get(i).getX(), disparoaliado.get(i).getY(), disparoaliado.get(i).gettamaino(), disparoaliado.get(i).gettamaino());
+        		batch.draw(disparoaliado.get(i).getTextura(), disparoaliado.get(i).getX(), disparoaliado.get(i).getY(), disparoaliado.get(i).getAltura(), disparoaliado.get(i).getAltura());
         	}
         }
         batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
         batch.end(); 
         entradadatos();
+	
     }
 	
     public void entradadatos() {
@@ -69,14 +67,14 @@ public class GameScreen extends AbstractScreen {
 		if(izquierdapulsada!=derechapulsada) {
 			int nuevaX;
 			if(izquierdapulsada) {
-				nuevaX=(int) (player.getX()-player.getVelocidad()*delta);
+				nuevaX=(int) (player.getX()-player.getVelocidadX()*delta);
 				if(tocaborde(nuevaX,player)) {
 					player.setX(0);
 				}else {
 					player.setX(nuevaX);
 				}
 			}else if(derechapulsada) {
-				nuevaX=(int) (player.getX()+player.getVelocidad()*delta);
+				nuevaX=(int) (player.getX()+player.getVelocidadX()*delta);
 				if(tocaborde(nuevaX,player)) {
 					player.setX(Gdx.graphics.getWidth()-player.getAnchura());
 				}else {
@@ -110,15 +108,15 @@ public class GameScreen extends AbstractScreen {
 		}
 		if(disparoaliado!=null&&disparoaliado.size()!=0) {
 			for (int i = 0; i < disparoaliado.size(); ++i) {
-				if(disparoaliado.get(i).getY()-disparoaliado.get(i).gettamaino()>Gdx.graphics.getHeight()) {
+				if(disparoaliado.get(i).getY()-disparoaliado.get(i).getAltura()>Gdx.graphics.getHeight()) {
 					disparoaliado.get(i).dispose();
 					disparoaliado.remove(i);
-				}else if(disparoaliado.get(i).getVelX()+disparoaliado.get(i).gettamaino()<0||disparoaliado.get(i).getX()-disparoaliado.get(i).getX()>Gdx.graphics.getWidth()) {
+				}else if(disparoaliado.get(i).getVelocidadX()+disparoaliado.get(i).getAltura()<0||disparoaliado.get(i).getX()-disparoaliado.get(i).getX()>Gdx.graphics.getWidth()) {
 					disparoaliado.get(i).dispose();
 					disparoaliado.remove(i);
 				}else {
-					disparoaliado.get(i).setX(disparoaliado.get(i).getX()+disparoaliado.get(i).getVelX());
-					disparoaliado.get(i).setY(disparoaliado.get(i).getY()+disparoaliado.get(i).getVelY());
+					disparoaliado.get(i).setX(disparoaliado.get(i).getX()+disparoaliado.get(i).getVelocidadX());
+					disparoaliado.get(i).setY(disparoaliado.get(i).getY()+disparoaliado.get(i).getVelocidadY());
 				}
 			}
 		}
@@ -128,7 +126,7 @@ public class GameScreen extends AbstractScreen {
 	public void disparaaliado() {
 		Texture textshoot = new Texture("badlogic.jpg");
 		int veldisparoY = 0;
-		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, veldisparoY, veldisparoaliado, textshoot);
+		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
 		disparoaliado.add(shoot);
 	}
 
