@@ -65,20 +65,18 @@ public class GameScreen extends AbstractScreen {
 		boolean intentadisparar = Gdx.input.isKeyPressed(Input.Keys.W)||Gdx.input.isKeyPressed(Input.Keys.UP)||Gdx.input.isKeyPressed(Input.Keys.SPACE);
 		float delta=Gdx.graphics.getDeltaTime();
 		if(izquierdapulsada!=derechapulsada) {
-			int nuevaX;
 			if(izquierdapulsada) {
-				nuevaX=(int) (player.getX()-player.getVelocidadX()*delta);
-				if(tocaborde(nuevaX,player)) {
+				if(player.getX()-player.getVelocidadX()*delta<0) {
 					player.setX(0);
 				}else {
-					player.setX(nuevaX);
+					player.setX(player.getX()-player.getVelocidadX()*delta);
 				}
 			}else if(derechapulsada) {
-				nuevaX=(int) (player.getX()+player.getVelocidadX()*delta);
-				if(tocaborde(nuevaX,player)) {
+				
+				if(Gdx.graphics.getWidth()<(player.getX()+player.getVelocidadX()*delta+player.getAnchura())) {
 					player.setX(Gdx.graphics.getWidth()-player.getAnchura());
 				}else {
-					player.setX(nuevaX);
+					player.setX(player.getX()+player.getVelocidadX()*delta);
 				}
 			}
 		}
@@ -88,15 +86,36 @@ public class GameScreen extends AbstractScreen {
 	public int calcularmitadpantX() {
 		return  (int) Gdx.graphics.getWidth()/2;
 	}
-	public boolean tocaborde(int nuevaX,Jugador player) {
-		if(Gdx.graphics.getWidth()<(nuevaX+player.getAnchura())) {
+	public boolean tocaborde(Entidad entity) {
+		float delta= Gdx.graphics.getDeltaTime();
+		if(Gdx.graphics.getWidth()<(entity.getX()+entity.getVelocidadX()*delta+entity.getAnchura())) {
 			return true;
-		}else if(nuevaX<0) {
+		}else if(entity.getX()-entity.getVelocidadX()*delta<0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
+	
+	public void disparaaliado() {
+		Texture textshoot = new Texture("badlogic.jpg");
+		int veldisparoY = 0;
+		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
+		disparoaliado.add(shoot);
+	}
+	public boolean fueradepantalla(Entidad entity) {
+		float pantx = Gdx.graphics.getWidth();
+		float panty = Gdx.graphics.getHeight();
+		if(entity.getX()+entity.getAnchura()<0||entity.getX()>pantx) {
+			return true;
+		}else if(entity.getY()+entity.getAltura()<0||entity.getY()>panty) {
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+
 	public void gestiondisparosaliado(boolean intentadisparar,float delta) {
 		if(intentadisparar) {
 			if(tiempodisparo>=enfriamientodisparo) {
@@ -108,10 +127,7 @@ public class GameScreen extends AbstractScreen {
 		}
 		if(disparoaliado!=null&&disparoaliado.size()!=0) {
 			for (int i = 0; i < disparoaliado.size(); ++i) {
-				if(disparoaliado.get(i).getY()-disparoaliado.get(i).getAltura()>Gdx.graphics.getHeight()) {
-					disparoaliado.get(i).dispose();
-					disparoaliado.remove(i);
-				}else if(disparoaliado.get(i).getVelocidadX()+disparoaliado.get(i).getAltura()<0||disparoaliado.get(i).getX()-disparoaliado.get(i).getX()>Gdx.graphics.getWidth()) {
+				if(fueradepantalla(disparoaliado.get(i))) {
 					disparoaliado.get(i).dispose();
 					disparoaliado.remove(i);
 				}else {
@@ -123,11 +139,5 @@ public class GameScreen extends AbstractScreen {
 		
 		
 	}
-	public void disparaaliado() {
-		Texture textshoot = new Texture("badlogic.jpg");
-		int veldisparoY = 0;
-		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
-		disparoaliado.add(shoot);
-	}
-
+	
 }
