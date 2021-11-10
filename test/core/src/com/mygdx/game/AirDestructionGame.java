@@ -17,10 +17,10 @@ public class AirDestructionGame extends Game{
 	public void create () {
 		batch = new SpriteBatch();
 		
-		GameScreen = new ventanas.GameScreen(this);
-		setScreen(GameScreen);
-		/*MenuScreen MenuScreen = new ventanas.MenuScreen(this);
-		setScreen(MenuScreen);*/
+		/*GameScreen = new ventanas.GameScreen(this);
+		setScreen(GameScreen);*/
+		MenuScreen MenuScreen = new ventanas.MenuScreen(this);
+		setScreen(MenuScreen);
 	}
 
 	/*@Override

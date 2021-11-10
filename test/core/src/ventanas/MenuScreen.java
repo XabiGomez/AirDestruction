@@ -13,7 +13,7 @@ public class MenuScreen extends AbstractScreen{
 	private Texture texture;
 	
 	private AirDestructionGame game = new AirDestructionGame();
-	public AbstractScreen GameScreen;
+	public GameScreen GameScreen;
 	
 	private Texture playActivo;
 	private static final int playActivoAltura = 100;
@@ -54,8 +54,8 @@ public class MenuScreen extends AbstractScreen{
         	 batch.draw(playActivo, 100, 100, playActivoAltura, playActivoAnchura);
         	 if (Gdx.input.isTouched()) {
         		 System.out.println("Tocado");
-        		 this.dispose();
-        		 GameScreen = new ventanas.MenuScreen(game);
+        		 //this.dispose();
+        		 GameScreen = new ventanas.GameScreen(game);
         		 game.setScreen(GameScreen);
         	 }
         }else {
@@ -69,8 +69,6 @@ public class MenuScreen extends AbstractScreen{
 	public void dispose() {
 		
 		batch.dispose();
-		playActivo.dispose();
-		playInactivo.dispose();
 		
 	}
 	
