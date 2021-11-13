@@ -5,6 +5,8 @@ import com.mygdx.game.AirDestructionGame;
 
 public class AbstractScreen implements Screen{
 	private AirDestructionGame main;
+	public static int altura = 1000;
+	public static int anchura = 600;
 	
 	public AbstractScreen(AirDestructionGame main) {
 		this.main = main;
@@ -29,7 +31,8 @@ public class AbstractScreen implements Screen{
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+		altura = height;
+		anchura = width;
 	}
 
 	@Override

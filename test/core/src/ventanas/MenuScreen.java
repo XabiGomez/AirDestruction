@@ -50,7 +50,7 @@ public class MenuScreen extends AbstractScreen{
         //hay que poner las width y height del launcher como constantes para utilizarlos
         int altura = 1000;
         int anchura = 600;
-        if (Gdx.input.getX() < x + playActivoAnchura && Gdx.input.getX() > x && altura - Gdx.input.getY() < y + playActivoAltura && altura - Gdx.input.getY() > y) {
+        if (Gdx.input.getX() < x*AbstractScreen.anchura/anchura + playActivoAnchura*AbstractScreen.anchura/anchura && Gdx.input.getX() > x*AbstractScreen.anchura/anchura && AbstractScreen.altura - Gdx.input.getY() < y*AbstractScreen.altura/altura + playActivoAltura*AbstractScreen.altura/altura && AbstractScreen.altura - Gdx.input.getY() > y*AbstractScreen.altura/altura) {
         	 batch.draw(playActivo, 100, 100, playActivoAltura, playActivoAnchura);
         	 if (Gdx.input.isTouched()) {
         		 System.out.println("Tocado");
