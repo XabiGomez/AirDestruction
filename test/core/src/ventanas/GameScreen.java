@@ -88,7 +88,6 @@ public class GameScreen extends AbstractScreen {
 			System.out.println(i+"-no existe clase enemigo");
 			break;
 		}
-		System.out.println(enemigos);
 	}
 	public void crearenem1() {
 		Enemigo1 enemprovisional;
@@ -205,7 +204,6 @@ public class GameScreen extends AbstractScreen {
 				for(Entidad j :enemigos) {
 					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
 					if(overlap) {
-						System.out.println("a");
 						disparoaliadoelimin.add((Disparo) i);
 						enemigoselimin.add((Enemigo) j);
 						overlap=false;
