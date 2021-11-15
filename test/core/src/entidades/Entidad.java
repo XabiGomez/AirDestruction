@@ -19,7 +19,6 @@ public class Entidad implements Disposable{
 		sprite.setX(x);
 		sprite.setY(y);
 		sprite.setSize(anchura, altura);
-		sprite.setScale(anchura, altura);
 		
 	}
 
@@ -101,8 +100,7 @@ public class Entidad implements Disposable{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stubÃ§
+		// TODO Auto-generated method stubÃƒÂ§
 		textura.dispose();
 	}
 }
-
