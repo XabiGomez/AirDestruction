@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.AirDestructionGame;
 
+import entidades.Boton;
+
 
 
 public class MenuScreen extends AbstractScreen{
