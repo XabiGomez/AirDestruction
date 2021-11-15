@@ -15,15 +15,17 @@ public class GameScreen extends AbstractScreen {
 	private SpriteBatch batch;
 	private Texture fondo;
 	private Texture fondo2;
-	private Texture jug;
+	private Texture jug,enem1;
 	private Jugador player;
-	int posyjugador = 100;
+	private int posyjugador = 100;
 	private int movimientoPantalla=0;
 	private int tamainodisparoaliado=32,veldisparoaliado=10;
-	float enfriamientodisparo= 0.1f;
-	float tiempodisparo=5;
-	ArrayList<Disparo> disparoaliado = new ArrayList<Disparo>();
-	
+	private int tiempospawnmin = 5, tiempospawnmax= 60;
+	private float tiempospawn=0.0f,tiempoactualspawn=1.0f;
+	private float enfriamientodisparo= 0.1f, tiempodisparo=5;
+	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
+	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
+	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
 	public GameScreen(AirDestructionGame main) {
 		super(main);
 	}
@@ -33,8 +35,12 @@ public class GameScreen extends AbstractScreen {
 		fondo = new Texture("GameFondo.jpg");
 		fondo2 = new Texture("GameFondo2.jpg");
 		jug = new Texture("snorlax.png");
-		player = new Jugador(calcularmitadpantX(),posyjugador,100,100,0,200,0,jug);
-
+		enem1=new Texture("badlogic.jpg");
+		player = new Jugador(0,posyjugador,100,100,0,200,0,jug);
+		player.setX(calcularmitadpantX(player));
+		//provisional
+		crearenem(1);
+		
 	}
 	
 	@Override
@@ -51,16 +57,48 @@ public class GameScreen extends AbstractScreen {
         }
         batch.draw(fondo, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
         batch.draw(fondo2, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        if(disparoaliado!=null&&disparoaliado.size()!=0) {
-        	for (int i = 0; i < disparoaliado.size(); ++i) {
-        		batch.draw(disparoaliado.get(i).getTextura(), disparoaliado.get(i).getX(), disparoaliado.get(i).getY(), disparoaliado.get(i).getAltura(), disparoaliado.get(i).getAltura());
-        	}
-        }
+        renderizarArrayList(disparoaliado);
+        renderizarArrayList(enemigos);
+        renderizarArrayList(disparoenemigo);
         batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
         batch.end(); 
         entradadatos();
+        gestiondecolisionesymov();
+        generadordeenemigos();
 	
     }
+	
+	
+
+	public void renderizarArrayList(ArrayList<Entidad> entitylist) {
+		if(entitylist!=null&&entitylist.size()!=0) {
+			for (int i = 0; i < entitylist.size(); ++i) {
+				batch.draw(entitylist.get(i).getTextura(), entitylist.get(i).getX(), entitylist.get(i).getY(), entitylist.get(i).getAnchura(), entitylist.get(i).getAltura());
+        	}
+		}
+	}
+	
+	public void crearenem(int i) {
+		switch (i) {
+		case 1:
+			crearenem1();
+			break;
+
+		default:
+			System.out.println(i+"-no existe clase enemigo");
+			break;
+		}
+		System.out.println(enemigos);
+	}
+	public void crearenem1() {
+		Enemigo1 enemprovisional;
+		int tamXenempro = 70, tamYenempro = 50;
+		float enemproY= Gdx.graphics.getHeight()-tamYenempro;
+		float enemproX= (float) (Math.random()*((Gdx.graphics.getWidth()-tamXenempro)*10));
+		enemproX = enemproX/10;
+		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,0,0,enem1,1);
+		enemigos.add(enemprovisional);
+	}
 	
     public void entradadatos() {
 		boolean izquierdapulsada = Gdx.input.isKeyPressed(Input.Keys.A)||Gdx.input.isKeyPressed(Input.Keys.LEFT);
@@ -86,8 +124,8 @@ public class GameScreen extends AbstractScreen {
 		gestiondisparosaliado(intentadisparar,delta);
 		
 	}
-	public int calcularmitadpantX() {
-		return  (int) Gdx.graphics.getWidth()/2;
+	public float calcularmitadpantX(Entidad entity) {
+		return  Gdx.graphics.getWidth()/2-entity.getAnchura()/2;
 	}
 	public boolean tocaborde(Entidad entity) {
 		float delta= Gdx.graphics.getDeltaTime();
@@ -128,6 +166,9 @@ public class GameScreen extends AbstractScreen {
 				tiempodisparo+=delta;
 			}
 		}
+		
+	}
+	public void moverdisparo(){
 		if(disparoaliado!=null&&disparoaliado.size()!=0) {
 			for (int i = 0; i < disparoaliado.size(); ++i) {
 				if(fueradepantalla(disparoaliado.get(i))) {
@@ -139,8 +180,61 @@ public class GameScreen extends AbstractScreen {
 				}
 			}
 		}
-		
-		
+		if(disparoaliado!=null&&disparoaliado.size()!=0) {
+			for (int i = 0; i < disparoaliado.size(); ++i) {
+				if(fueradepantalla(disparoaliado.get(i))) {
+					disparoaliado.get(i).dispose();
+					disparoaliado.remove(i);
+				}else {
+					disparoaliado.get(i).setX(disparoaliado.get(i).getX()+disparoaliado.get(i).getVelocidadX());
+					disparoaliado.get(i).setY(disparoaliado.get(i).getY()+disparoaliado.get(i).getVelocidadY());
+				}
+			}
+		}
 	}
+	public void gestiondecolisionesymov() {
+		moverdisparo();
+		gestiondecolisionesdisparoaliado();
+	}
+	public void gestiondecolisionesdisparoaliado() {
+		if(disparoaliado!=null&&disparoaliado.size()>0&&enemigos!=null&&enemigos.size()>0) {
+			ArrayList<Disparo> disparoaliadoelimin = new ArrayList<>();
+			ArrayList<Enemigo> enemigoselimin = new ArrayList<>();
+			boolean overlap=false;
+			for(Entidad i : disparoaliado) {
+				for(Entidad j :enemigos) {
+					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
+					if(overlap) {
+						System.out.println("a");
+						disparoaliadoelimin.add((Disparo) i);
+						enemigoselimin.add((Enemigo) j);
+						overlap=false;
+						break;
+					}
+					
+				}
+			}
+			if(disparoaliadoelimin!=null) {
+				for(int i =0; i<disparoaliadoelimin.size();++i) {
+					disparoaliado.remove(disparoaliadoelimin.get(i));
+				}
+			}
+			if(enemigoselimin!=null) {
+				for(int i =0; i<enemigoselimin.size();++i) {
+					enemigos.remove(enemigoselimin.get(i));
+				}
+			}
+		}
+	}
+	public void generadordeenemigos() {
+		if(tiempospawn<tiempoactualspawn) {
+			tiempospawn= (float) ((Math.random()*tiempospawnmax + tiempospawnmin)/10);  // Valor entre M y N, ambos incluidos.
+			tiempoactualspawn=0.0f;
+			crearenem(1);
+		}else {
+			tiempoactualspawn+=Gdx.graphics.getDeltaTime();
+		}
+	}
+	
 	
 }
