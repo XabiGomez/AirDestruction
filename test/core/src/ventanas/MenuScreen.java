@@ -16,18 +16,16 @@ public class MenuScreen extends AbstractScreen{
 	public GameScreen GameScreen;
 	
 	private Texture playActivo;
-	private static final int playActivoAltura = 100;
-	private static final int playActivoAnchura = 100;
-	
 	private Texture playInactivo;
-	private static final int playInactivoAltura = 100;
-	private static final int playInactivoAnchura = 100;
 
+	Boton boton1;
+	
 	public MenuScreen(AirDestructionGame main) {
 		super(main);
 		game = main;
 		playActivo = new Texture("botones/playActivo.png");
 		playInactivo = new Texture("botones/playInactivo.png");
+		boton1 = new Boton(playActivo, playInactivo, 100, 100, 100, 100);
 	}
 	
 	public void show() {
@@ -41,17 +39,11 @@ public class MenuScreen extends AbstractScreen{
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 
-        batch.begin(); 
-        //batch.draw(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
+        batch.begin();  
         
         
-        int x = 100;
-        int y = 100;
-        //hay que poner las width y height del launcher como constantes para utilizarlos
-        int altura = 1000;
-        int anchura = 600;
-        if (Gdx.input.getX() < x*AbstractScreen.anchura/anchura + playActivoAnchura*AbstractScreen.anchura/anchura && Gdx.input.getX() > x*AbstractScreen.anchura/anchura && AbstractScreen.altura - Gdx.input.getY() < y*AbstractScreen.altura/altura + playActivoAltura*AbstractScreen.altura/altura && AbstractScreen.altura - Gdx.input.getY() > y*AbstractScreen.altura/altura) {
-        	 batch.draw(playActivo, 100, 100, playActivoAltura, playActivoAnchura);
+       if (boton1.esTocado()) {
+        	 batch.draw(boton1.getNombreActivo(), boton1.getX(), boton1.getY(), boton1.getAltura(), boton1.getAnchura());
         	 if (Gdx.input.isTouched()) {
         		 System.out.println("Tocado");
         		 //this.dispose();
@@ -59,7 +51,7 @@ public class MenuScreen extends AbstractScreen{
         		 game.setScreen(GameScreen);
         	 }
         }else {
-        	batch.draw(playInactivo, 100, 100, playInactivoAltura, playInactivoAnchura);
+        	batch.draw(boton1.getNombreInactivo(), boton1.getX(), boton1.getY(), boton1.getAltura(), boton1.getAnchura());
         }
        
         batch.end(); 
