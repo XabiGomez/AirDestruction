@@ -214,7 +214,7 @@ public class GameScreen extends AbstractScreen {
 					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
 					if(overlap) {
 						Gdx.app.log("Colision", "Enemigo Derrotado");
-						Gdx.app.error("Error falso", "continua");
+						Gdx.app.error("Error falso", "continuar");
 						
 						disparoaliadoelimin.add((Disparo) i);
 						enemigoselimin.add((Enemigo) j);
