@@ -66,10 +66,8 @@ public class MenuScreen extends AbstractScreen{
 		playInactivo = new Texture("botones/playInactivo.png");
 		boton1 = new Boton(playActivo, playInactivo, 100, 100, 100, 100);
 		
-    	viewport = new FitViewport(600, 600);
-    	viewport.apply();
     	skin = new Skin(Gdx.files.internal("widgets//uiskin.json"));
-    	stage = new Stage(viewport,batch);
+    	stage = new Stage(game.getViewport());
 
 		
 	}
@@ -81,22 +79,44 @@ public class MenuScreen extends AbstractScreen{
 		menu.setFillParent(true);
 		menu.center();
 		
-		TextButton boton1 = new TextButton("Jugar", skin);
+		//Boton jugar
+		TextButton botonJugar = new TextButton("Jugar", skin);
 
-		boton1.addListener(new ChangeListener(){
+		botonJugar.addListener(new ChangeListener(){
             public void changed (ChangeEvent event, Actor actor) {
             	MenuScreen.this.dispose();
             	MenuScreen.this.game.setScreen(new GameScreen(MenuScreen.this.game));           	           	
-            	
-               
-               //((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
-            	//((Game)Gdx.app.getApplicationListener()).setScreen(new PlayScreen());
-               
+            	Gdx.app.log("Boton", "pulsado"); 
             }
         });
 		
-		menu.add(boton1).width(200);
+		//Boton opciones
+		TextButton botonOpciones = new TextButton("Opciones", skin);
+
+		botonOpciones.addListener(new ChangeListener(){
+		    public void changed (ChangeEvent event, Actor actor) {
+		         Gdx.app.log("Boton", "pulsado");     	           	
+		               
+		    }
+		});
+		
+		//Boton salir
+		TextButton botonSalir = new TextButton("Salir", skin);
+
+		botonSalir.addListener(new ChangeListener(){
+            public void changed (ChangeEvent event, Actor actor) {
+            	Gdx.app.log("Boton", "pulsado"); 
+            	Gdx.app.exit();      	           	
+               
+            }
+        });	
+		
+		
+		menu.add(botonJugar).minWidth(200).padBottom(25);
         menu.row();
+        menu.add(botonOpciones).minWidth(200).padBottom(25);
+        menu.row();
+        menu.add(botonSalir).minWidth(200);
         
         stage.addActor(menu);
         
@@ -112,22 +132,7 @@ public class MenuScreen extends AbstractScreen{
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 
-        batch.begin();  
-        
-       /*
-       if (boton1.esTocado()) {
-        	 batch.draw(boton1.getNombreActivo(), boton1.getX(), boton1.getY(), boton1.getAltura(), boton1.getAnchura());
-        	 if (Gdx.input.isTouched()) {
-        		 System.out.println("Tocado");
-        		 //this.dispose();
-        		 GameScreen = new ventanas.GameScreen(game);
-        		 game.setScreen(GameScreen);
-        	 }
-        }else {
-        	batch.draw(boton1.getNombreInactivo(), boton1.getX(), boton1.getY(), boton1.getAltura(), boton1.getAnchura());
-        }
-        */
-       
+        batch.begin();       
         batch.end(); 
         
         stage.act();

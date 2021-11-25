@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.AirDestructionGame;
 
@@ -26,6 +27,8 @@ public class GameScreen extends AbstractScreen {
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
+	int score = 0;
+	private BitmapFont font;
 	public GameScreen(AirDestructionGame main) {
 		super(main);
 	}
@@ -40,6 +43,7 @@ public class GameScreen extends AbstractScreen {
 		player.setX(calcularmitadpantX(player));
 		//provisional
 		crearenem(1);
+		font = new BitmapFont();
 		
 	}
 	
@@ -61,6 +65,7 @@ public class GameScreen extends AbstractScreen {
         renderizarArrayList(enemigos);
         renderizarArrayList(disparoenemigo);
         batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
+        font.draw(batch, score+"", 50, 75);
         batch.end(); 
         entradadatos();
         gestiondecolisionesymov();
@@ -93,7 +98,7 @@ public class GameScreen extends AbstractScreen {
 			break;
 
 		default:
-			System.out.println(i+"-no existe clase enemigo");
+			Gdx.app.error("Error", "no existe clase enemigo"); 
 			break;
 		}
 	}
@@ -214,8 +219,8 @@ public class GameScreen extends AbstractScreen {
 					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
 					if(overlap) {
 						Gdx.app.log("Colision", "Enemigo Derrotado");
-						Gdx.app.error("Error falso", "continuar");
-						
+						score += 1;
+						System.out.println(score);
 						disparoaliadoelimin.add((Disparo) i);
 						enemigoselimin.add((Enemigo) j);
 						overlap=false;
