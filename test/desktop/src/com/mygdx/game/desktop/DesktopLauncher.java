@@ -4,6 +4,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.AirDestructionGame;
 
+import ventanas.MenuScreen;
+
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration configuracion = new LwjglApplicationConfiguration();
@@ -12,5 +14,6 @@ public class DesktopLauncher {
 		configuracion.width = 600;
 		configuracion.title = "Air Destruction";
 		new LwjglApplication(new AirDestructionGame(), configuracion);
+		//new LwjglApplication(new MenuScreen(), configuracion);
 	}
 }
