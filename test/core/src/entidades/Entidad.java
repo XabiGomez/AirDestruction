@@ -103,4 +103,7 @@ public class Entidad implements Disposable{
 		// TODO Auto-generated method stubÃƒÂ§
 		textura.dispose();
 	}
+	public void mover() {
+	}
+	
 }

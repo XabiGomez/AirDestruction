@@ -65,15 +65,23 @@ public class GameScreen extends AbstractScreen {
         entradadatos();
         gestiondecolisionesymov();
         generadordeenemigos();
+        
 	
     }
 	
 	
 
-	public void renderizarArrayList(ArrayList<Entidad> entitylist) {
-		if(entitylist!=null&&entitylist.size()!=0) {
-			for (int i = 0; i < entitylist.size(); ++i) {
-				batch.draw(entitylist.get(i).getTextura(), entitylist.get(i).getX(), entitylist.get(i).getY(), entitylist.get(i).getAnchura(), entitylist.get(i).getAltura());
+	private void moverEnemigos() {
+		for (Entidad i :enemigos) {
+			i.mover();
+		}
+		
+	}
+
+	public void renderizarArrayList(ArrayList<Entidad> disparoaliado2) {
+		if(disparoaliado2!=null&&disparoaliado2.size()!=0) {
+			for (int i = 0; i < disparoaliado2.size(); ++i) {
+				batch.draw(disparoaliado2.get(i).getTextura(), disparoaliado2.get(i).getX(), disparoaliado2.get(i).getY(), disparoaliado2.get(i).getAnchura(), disparoaliado2.get(i).getAltura());
         	}
 		}
 	}
@@ -95,7 +103,7 @@ public class GameScreen extends AbstractScreen {
 		float enemproY= Gdx.graphics.getHeight()-tamYenempro;
 		float enemproX= (float) (Math.random()*((Gdx.graphics.getWidth()-tamXenempro)*10));
 		enemproX = enemproX/10;
-		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,0,0,enem1,1);
+		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,0,enem1,1);
 		enemigos.add(enemprovisional);
 	}
 	
@@ -194,6 +202,7 @@ public class GameScreen extends AbstractScreen {
 	public void gestiondecolisionesymov() {
 		moverdisparo();
 		gestiondecolisionesdisparoaliado();
+		moverEnemigos();
 	}
 	public void gestiondecolisionesdisparoaliado() {
 		if(disparoaliado!=null&&disparoaliado.size()>0&&enemigos!=null&&enemigos.size()>0) {
