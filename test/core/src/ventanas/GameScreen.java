@@ -100,7 +100,7 @@ public class GameScreen extends AbstractScreen {
 	public void crearenem1() {
 		Enemigo1 enemprovisional;
 		int tamXenempro = 70, tamYenempro = 50;
-		float enemproY= Gdx.graphics.getHeight()-tamYenempro;
+		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
 		float enemproX= (float) (Math.random()*((Gdx.graphics.getWidth()-tamXenempro)*10));
 		enemproX = enemproX/10;
 		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,0,enem1,1);
@@ -213,6 +213,9 @@ public class GameScreen extends AbstractScreen {
 				for(Entidad j :enemigos) {
 					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
 					if(overlap) {
+						Gdx.app.log("Colision", "Enemigo Derrotado");
+						Gdx.app.error("Error falso", "continua");
+						
 						disparoaliadoelimin.add((Disparo) i);
 						enemigoselimin.add((Enemigo) j);
 						overlap=false;
