@@ -1,6 +1,9 @@
 package ventanas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.AirDestructionGame;
@@ -21,8 +26,24 @@ import com.mygdx.game.AirDestructionGame;
 import entidades.Boton;
 
 
-
 public class MenuScreen extends AbstractScreen{
+
+	class KeyboardProcessor extends InputAdapter {
+	        
+	        @Override
+			public boolean keyUp(int key) {
+	            switch (key) {
+	                case Keys.C:    game.dispose();
+	                                game.setScreen(new GameScreen(game));
+	                                break;
+	
+	                default:        break;
+	            }
+	
+	            return false;
+	        }
+	    }
+	
 	private SpriteBatch batch = new SpriteBatch();;
 	private Texture texture;
 	
@@ -62,15 +83,15 @@ public class MenuScreen extends AbstractScreen{
 		
 		TextButton boton1 = new TextButton("Jugar", skin);
 
-		boton1.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	System.out.println("aaaaaa");
-            	           	
-            	//((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+		boton1.addListener(new ChangeListener(){
+            public void changed (ChangeEvent event, Actor actor) {
+            	MenuScreen.this.dispose();
+            	MenuScreen.this.game.setScreen(new GameScreen(MenuScreen.this.game));           	           	
+            	
+               
+               //((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
             	//((Game)Gdx.app.getApplicationListener()).setScreen(new PlayScreen());
-                //MainScreen.this.dispose();
-               // MainScreen.this.game.setScreen(new GameScreen(MainScreen.this.game));
+               
             }
         });
 		
@@ -78,6 +99,12 @@ public class MenuScreen extends AbstractScreen{
         menu.row();
         
         stage.addActor(menu);
+        
+        InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(new KeyboardProcessor());
+		Gdx.input.setInputProcessor(multiplexer);
+        
 	}
 	
 	@Override
