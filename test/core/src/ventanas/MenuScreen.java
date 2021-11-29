@@ -6,25 +6,15 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.AirDestructionGame;
-
-import entidades.Boton;
-
 
 public class MenuScreen extends AbstractScreen{
 
@@ -49,23 +39,13 @@ public class MenuScreen extends AbstractScreen{
 	
 	private AirDestructionGame game = new AirDestructionGame();
 	public GameScreen GameScreen;
-	
-	private Texture playActivo;
-	private Texture playInactivo;
 	 
 	protected Stage stage;
-	private Viewport viewport;
 	protected Skin skin;
-
-	Boton boton1;
 	
 	public MenuScreen(AirDestructionGame main) {
 		super(main);
 		game = main;
-		playActivo = new Texture("botones/playActivo.png");
-		playInactivo = new Texture("botones/playInactivo.png");
-		boton1 = new Boton(playActivo, playInactivo, 100, 100, 100, 100);
-		
     	skin = new Skin(Gdx.files.internal("widgets//uiskin.json"));
     	stage = new Stage(game.getViewport());
 
@@ -73,8 +53,12 @@ public class MenuScreen extends AbstractScreen{
 	}
 	
 	public void show() {
+		//Imagen de fondo
 		texture = new Texture("GameFondo.jpg");
+		Image fondo = new Image(texture);
+        stage.addActor(fondo);
 		
+        //crear la tabla
 		Table menu = new Table();
 		menu.setFillParent(true);
 		menu.center();
@@ -95,7 +79,9 @@ public class MenuScreen extends AbstractScreen{
 
 		botonOpciones.addListener(new ChangeListener(){
 		    public void changed (ChangeEvent event, Actor actor) {
-		         Gdx.app.log("Boton", "pulsado");     	           	
+		    	MenuScreen.this.dispose();
+		    	MenuScreen.this.game.setScreen(new OptionsScreen(MenuScreen.this.game));
+		        Gdx.app.log("Boton", "pulsado");     	           	
 		               
 		    }
 		});
@@ -111,7 +97,7 @@ public class MenuScreen extends AbstractScreen{
             }
         });	
 		
-		
+		//Anyadir botones a la tabla
 		menu.add(botonJugar).minWidth(200).padBottom(25);
         menu.row();
         menu.add(botonOpciones).minWidth(200).padBottom(25);
@@ -120,6 +106,7 @@ public class MenuScreen extends AbstractScreen{
         
         stage.addActor(menu);
         
+        //multiplexer para que funcionen los botones
         InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(new KeyboardProcessor());
