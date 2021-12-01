@@ -29,6 +29,7 @@ public class GameScreen extends AbstractScreen {
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
 	int score = 0;
 	private BitmapFont font;
+	int numOleada = 0;
 	public GameScreen(AirDestructionGame main) {
 		super(main);
 	}
@@ -42,11 +43,12 @@ public class GameScreen extends AbstractScreen {
 		player = new Jugador(0,posyjugador,100,100,0,200,0,jug);
 		player.setX(calcularmitadpantX(player));
 		//provisional
-		crearenem(1);
+		generarOleada();
+		//crearenem(1);
 		font = new BitmapFont();
-		
-	}
+	}	
 	
+
 	@Override
     public void render(float delta) { 
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -69,11 +71,31 @@ public class GameScreen extends AbstractScreen {
         batch.end(); 
         entradadatos();
         gestiondecolisionesymov();
-        generadordeenemigos();
+        //generadordeenemigos();
         
 	
     }
 	
+
+	
+	private void generarOleada() {
+		//numOleada++;
+		numOleada=1;
+		switch (numOleada) {
+		case 1:
+			crearenem(1);
+			crearenem(1);
+			crearenem(1);
+			crearenem(1);
+			crearenem(1);
+			break;
+
+		default:
+			Gdx.app.error("Error", "no existe ese numero de oleada"); 
+			break;
+		}
+		
+	}
 	
 
 	private void moverEnemigos() {
@@ -237,10 +259,26 @@ public class GameScreen extends AbstractScreen {
 			if(enemigoselimin!=null) {
 				for(int i =0; i<enemigoselimin.size();++i) {
 					enemigos.remove(enemigoselimin.get(i));
+					if (enemigos.isEmpty()) {
+						//Espera medio segundo antes de generar la siguiente oleada
+						Thread esperar =new Thread() {
+							@Override
+							public void run() {
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									Gdx.app.error("Error", "Error al esperar"); 
+								}
+								generarOleada();
+							}
+						};
+						esperar.start();
+					}
 				}
 			}
 		}
 	}
+	//no se usa
 	public void generadordeenemigos() {
 		if(tiempospawn<tiempoactualspawn) {
 			tiempospawn= (float) ((Math.random()*tiempospawnmax + tiempospawnmin)/10);  // Valor entre M y N, ambos incluidos.
