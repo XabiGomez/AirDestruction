@@ -70,7 +70,7 @@ public class MenuScreen extends AbstractScreen{
             public void changed (ChangeEvent event, Actor actor) {
             	MenuScreen.this.dispose();
             	MenuScreen.this.game.setScreen(new GameScreen(MenuScreen.this.game));           	           	
-            	Gdx.app.log("Boton", "pulsado"); 
+            	Gdx.app.log("Jugar", "Entrando a la partida"); 
             }
         });
 		
@@ -81,7 +81,7 @@ public class MenuScreen extends AbstractScreen{
 		    public void changed (ChangeEvent event, Actor actor) {
 		    	MenuScreen.this.dispose();
 		    	MenuScreen.this.game.setScreen(new OptionsScreen(MenuScreen.this.game));
-		        Gdx.app.log("Boton", "pulsado");     	           	
+		        Gdx.app.log("Opciones", "Entrando menu de opciones");     	           	
 		               
 		    }
 		});
@@ -91,7 +91,7 @@ public class MenuScreen extends AbstractScreen{
 
 		botonSalir.addListener(new ChangeListener(){
             public void changed (ChangeEvent event, Actor actor) {
-            	Gdx.app.log("Boton", "pulsado"); 
+            	Gdx.app.log("Salir", "Saliendo del juego"); 
             	Gdx.app.exit();      	           	
                
             }

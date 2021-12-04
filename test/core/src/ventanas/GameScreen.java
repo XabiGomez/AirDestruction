@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -55,7 +56,6 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 
         batch.begin(); 
-        //Habra que cambiar la pantalla para que no se vea tan mal
         movimientoPantalla++;
         if(movimientoPantalla % Gdx.graphics.getHeight()==0) {
         	movimientoPantalla = 0;
@@ -67,6 +67,8 @@ public class GameScreen extends AbstractScreen {
         renderizarArrayList(enemigos);
         renderizarArrayList(disparoenemigo);
         batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
+        font.getData().setScale(2f);
+        font.setColor(Color.RED);
         font.draw(batch, score+"", 50, 75);
         batch.end(); 
         entradadatos();
@@ -147,7 +149,6 @@ public class GameScreen extends AbstractScreen {
 					player.setX(player.getX()-player.getVelocidadX()*delta);
 				}
 			}else if(derechapulsada) {
-				
 				if(Gdx.graphics.getWidth()<(player.getX()+player.getVelocidadX()*delta+player.getAnchura())) {
 					player.setX(Gdx.graphics.getWidth()-player.getAnchura());
 				}else {
@@ -156,6 +157,7 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 		gestiondisparosaliado(intentadisparar,delta);
+		
 		
 	}
 	public float calcularmitadpantX(Entidad entity) {
@@ -177,6 +179,7 @@ public class GameScreen extends AbstractScreen {
 		int veldisparoY = 0;
 		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
 		disparoaliado.add(shoot);
+		Gdx.app.log("disaroaliado", "Aliado efectuo el disparo");
 	}
 	public boolean fueradepantalla(Entidad entity) {
 		float pantx = Gdx.graphics.getWidth();
