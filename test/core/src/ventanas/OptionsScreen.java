@@ -74,7 +74,8 @@ public class OptionsScreen extends AbstractScreen{
 		botonSalir.addListener(new ChangeListener(){
             public void changed (ChangeEvent event, Actor actor) {
             	OptionsScreen.this.dispose();
-                OptionsScreen.this.game.setScreen(new MenuScreen(OptionsScreen.this.game));	           	
+                OptionsScreen.this.game.setScreen(new MenuScreen(OptionsScreen.this.game));	
+                Gdx.app.log("MenuSalir", "Volviendo al menu");
                
             }
         });	
