@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.AirDestructionGame;
 
+import entidades.Musica;
+
 public class MenuScreen extends AbstractScreen{
 
 	class KeyboardProcessor extends InputAdapter {
@@ -58,6 +60,16 @@ public class MenuScreen extends AbstractScreen{
 		Image fondo = new Image(texture);
         stage.addActor(fondo);
 		
+        //reproducir musica
+      	if (Musica.getMusic() == null) {
+      		Musica.reproducirMusica();
+      		Gdx.app.log("Musica", "Reproducciendo la musica");
+  		}
+      	else if (!Musica.getMusic().isPlaying()) {
+      		Musica.reproducirMusica();
+      		Gdx.app.log("Musica", "Reproducciendo la musica");
+   		}
+        
         //crear la tabla
 		Table menu = new Table();
 		menu.setFillParent(true);
@@ -92,7 +104,8 @@ public class MenuScreen extends AbstractScreen{
 		botonSalir.addListener(new ChangeListener(){
             public void changed (ChangeEvent event, Actor actor) {
             	Gdx.app.log("Salir", "Saliendo del juego"); 
-            	Gdx.app.exit();      	           	
+            	Gdx.app.exit();    
+            	Musica.pararMusica();
                
             }
         });	

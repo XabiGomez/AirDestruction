@@ -9,16 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.AirDestructionGame;
-
-import ventanas.MenuScreen.KeyboardProcessor;
+import entidades.Musica;
 
 public class OptionsScreen extends AbstractScreen{
 
@@ -59,14 +57,25 @@ public class OptionsScreen extends AbstractScreen{
 	}
 	
 	public void show() {
-		//Fondo (NO COMPLETADO)
-		texture = new Texture("GameFondo.jpg");
 		
 		//Crear una tabla "Menu"
 		Table menu = new Table();
 		menu.setFillParent(true);
 		menu.center();
 		stage.addActor(menu);
+		
+		//slider
+		final Slider slider = new Slider(0, 100, 0.1f, false, skin);
+		slider.setValue(20);
+				
+		slider.addListener(new ChangeListener() {
+
+	        @Override
+	        public void changed(ChangeEvent event, Actor actor) {
+	            if (slider.isDragging())
+	                Musica.getMusic().setVolume(slider.getValue() / 100f);
+	        }
+	    });
 		
 		//Boton salir
 		TextButton botonSalir = new TextButton("Volver a la pantalla principal", skin);
@@ -80,14 +89,23 @@ public class OptionsScreen extends AbstractScreen{
             }
         });	
         
-        //checkbox sonido (NO COMPLETADO)
-        final CheckBox sonidoCheck = new CheckBox("Sonido", game.getDefaultSkin());
-		menu.add(sonidoCheck).minWidth(200).padBottom(25);
+        //Boton silenciar 
+        TextButton botonSonido = new TextButton("Silenciar", skin);
+        
+        botonSonido.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                Musica.apagarMusica();
+                slider.setValue(0);
+            }
+        });
         
 		//Anyadir botones a la tabla "Menu"
-		menu.add(sonidoCheck).minWidth(200).padBottom(25);
+        menu.add(slider).padBottom(25);
 		menu.row();
-		menu.add(botonSalir).minWidth(400);        
+		menu.add(botonSonido).minWidth(200).padBottom(25);
+		menu.row();
+		menu.add(botonSalir).minWidth(300);        
         InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(new KeyboardProcessor());
