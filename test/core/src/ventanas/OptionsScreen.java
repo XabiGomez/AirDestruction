@@ -40,10 +40,8 @@ public class OptionsScreen extends AbstractScreen{
 	public GameScreen GameScreen;
 	
 	private SpriteBatch batch = new SpriteBatch();;
-	private Texture texture;
 	
 	protected Stage stage;
-	private Viewport viewport;
 	protected Skin skin;
 	
 	
