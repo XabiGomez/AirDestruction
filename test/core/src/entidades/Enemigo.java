@@ -3,11 +3,20 @@ package entidades;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Enemigo extends Entidad{
-	int dano;
-	public Enemigo(float x, float y , float altura, float anchura, int vida, int velocidadX, int velocidadY, Texture textura, int dano) {
+	protected int dano;
+	protected int tipo;
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
+	public Enemigo(float x, float y , float altura, float anchura, int vida, int velocidadX, int velocidadY, Texture textura, int dano,int tipo) {
 		super(x, y, altura, anchura, vida, velocidadX, velocidadY, textura);
 		this.dano = dano;
-		
+		this.tipo = tipo;
 	}
 
 	public int getDano() {
@@ -20,4 +29,5 @@ public class Enemigo extends Entidad{
 	
 	
 }
+
 
