@@ -13,6 +13,7 @@ import com.mygdx.game.AirDestructionGame;
 import entidades.*;
 
 public class GameScreen extends AbstractScreen {
+	private AirDestructionGame game = new AirDestructionGame();
 	private SpriteBatch batch;
 	private Texture fondo;
 	private Texture fondo2;
@@ -32,6 +33,7 @@ public class GameScreen extends AbstractScreen {
 	int numOleada = 0;
 	public GameScreen(AirDestructionGame main) {
 		super(main);
+		game = main;
 	}
 	
 	public void show() {
@@ -236,7 +238,36 @@ public class GameScreen extends AbstractScreen {
 		gestiondecolisionesdisparoaliado();
 		gestiondisenem();
 		moverdisparo(disparoenemigo);
+		gestiondecolisionesdisparoEnemigo();
 	}
+	private void gestiondecolisionesdisparoEnemigo() {
+		if(disparoenemigo!=null&&disparoenemigo.size()>0) {
+			ArrayList<Disparo> disparoenemigoelimin = new ArrayList<>();
+			boolean overlap = false;
+			for(Entidad i : disparoenemigo) {
+				overlap = i.getSprite().getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle());
+				if(overlap) {
+					Gdx.app.log("Colision", "Personaje Tocado");
+					player.setVida(player.getVida()-1);
+					if(player.getVida()<1) {
+						GameScreen.this.dispose();
+				    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
+				        Gdx.app.log("Jugar", "Fin de la partida");
+					}
+					disparoenemigoelimin.add((Disparo) i);
+					overlap=false;
+					break;
+				}
+			}
+			if(disparoenemigoelimin!=null) {
+				for(int i =0; i<disparoenemigoelimin.size();++i) {
+					disparoenemigo.remove(disparoenemigoelimin.get(i));
+				}
+			}
+		}
+		
+	}
+
 	public void gestiondecolisionesdisparoaliado() {
 		if(disparoaliado!=null&&disparoaliado.size()>0&&enemigos!=null&&enemigos.size()>0) {
 			ArrayList<Disparo> disparoaliadoelimin = new ArrayList<>();
@@ -246,7 +277,7 @@ public class GameScreen extends AbstractScreen {
 				for(Entidad j :enemigos) {
 					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
 					if(overlap) {
-						Gdx.app.log("Colision", "Enemigo Derrotado");
+						Gdx.app.log("Colision", "Enemigo Tocado");
 						score += 1;
 						System.out.println(score);
 						disparoaliadoelimin.add((Disparo) i);
@@ -263,7 +294,11 @@ public class GameScreen extends AbstractScreen {
 			}
 			if(enemigoselimin!=null) {
 				for(int i =0; i<enemigoselimin.size();++i) {
-					enemigos.remove(enemigoselimin.get(i));
+					enemigoselimin.get(i).setVida(enemigoselimin.get(i).getVida()-1);
+					if(enemigoselimin.get(i).getVida()<1) {
+						Gdx.app.log("Colision", "Enemigo Eliminado");
+						enemigos.remove(enemigoselimin.get(i));
+					}
 					if (enemigos.isEmpty()) {
 						//Espera medio segundo antes de generar la siguiente oleada
 						Thread esperar =new Thread() {
