@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -71,6 +72,8 @@ public class GameScreen extends AbstractScreen {
         renderizarArrayList(enemigos);
         renderizarArrayList(disparoenemigo);
         batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
+        font.getData().setScale(2f);
+        font.setColor(Color.RED);
         font.draw(batch, score+"", 50, 75);
         batch.end(); 
         entradadatos();
