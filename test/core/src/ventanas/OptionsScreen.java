@@ -1,11 +1,18 @@
 package ventanas;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,9 +21,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.AirDestructionGame;
+
+import entidades.BaseDeDatos;
 import entidades.Musica;
+import entidades.Player;
+
+
 
 public class OptionsScreen extends AbstractScreen{
 
@@ -38,12 +49,10 @@ public class OptionsScreen extends AbstractScreen{
 	
 	private AirDestructionGame game = new AirDestructionGame();
 	public GameScreen GameScreen;
-	
+	private ArrayList<Player> ranking;
 	private SpriteBatch batch = new SpriteBatch();;
-	private Texture texture;
 	
 	protected Stage stage;
-	private Viewport viewport;
 	protected Skin skin;
 	
 	
@@ -77,6 +86,16 @@ public class OptionsScreen extends AbstractScreen{
 	        }
 	    });
 		
+		//Boton del ranking
+		TextButton botonRanking = new TextButton("Ranking",skin);
+		botonRanking.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				//mostrarRanking();
+				Gdx.app.log("Ranking", "Abriendo Ranking");
+		    }
+		});
+
+		
 		//Boton salir
 		TextButton botonSalir = new TextButton("Volver a la pantalla principal", skin);
 
@@ -88,7 +107,7 @@ public class OptionsScreen extends AbstractScreen{
                
             }
         });	
-        
+		    
         //Boton silenciar 
         TextButton botonSonido = new TextButton("Silenciar", skin);
         
@@ -105,6 +124,8 @@ public class OptionsScreen extends AbstractScreen{
 		menu.row();
 		menu.add(botonSonido).minWidth(200).padBottom(25);
 		menu.row();
+		menu.add(botonRanking).minWidth(200);
+		menu.row();
 		menu.add(botonSalir).minWidth(300);        
         InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(stage);
@@ -113,7 +134,18 @@ public class OptionsScreen extends AbstractScreen{
 
         
 	}
-	
+	public void mostrarRanking() {
+		Vector<String> titulos = new Vector<String>( Arrays.asList( "Id", "Nombre", "Score" ) );
+		DefaultTableModel modelo = new DefaultTableModel(  
+			new Vector<Vector<Object>>(),  
+			titulos  
+		);
+		ranking = BaseDeDatos.getPlayers();
+		for (Player p : ranking) {
+		modelo.addRow(new Object[] {p.getId(),p.getNombre(),p.getScore()});
+		}
+		//JTable jtable = new JTable(modelo);
+	}
 	@Override
     public void render(float delta) { 
         Gdx.gl.glClearColor(0, 0, 1, 1);

@@ -1,5 +1,8 @@
 package ventanas;
 
+import javax.swing.JOptionPane;
+
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
@@ -15,8 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.AirDestructionGame;
-
 import entidades.Musica;
+
+
 
 public class MenuScreen extends AbstractScreen{
 
@@ -81,8 +85,12 @@ public class MenuScreen extends AbstractScreen{
 		botonJugar.addListener(new ChangeListener(){
             public void changed (ChangeEvent event, Actor actor) {
             	MenuScreen.this.dispose();
-            	MenuScreen.this.game.setScreen(new GameScreen(MenuScreen.this.game));           	           	
+            	MenuScreen.this.game.setScreen(new GameScreen(MenuScreen.this.game));    
             	Gdx.app.log("Jugar", "Entrando a la partida"); 
+				String j = JOptionPane.showInputDialog(null, "Introduzca el nombre de jugador:", "Ejemplo: Maria");
+				while (j==null){
+					j = JOptionPane.showInputDialog(null, "Introduzca el nombre de jugador:", "Ejemplo: Maria");
+				}
             }
         });
 		

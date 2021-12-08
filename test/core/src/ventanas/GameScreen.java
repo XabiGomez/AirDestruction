@@ -2,6 +2,7 @@ package ventanas;
 
 import java.util.ArrayList;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -27,7 +28,7 @@ public class GameScreen extends AbstractScreen {
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
-	int score = 0;
+	int  score = 0;
 	private BitmapFont font;
 	int numOleada = 0;
 	public GameScreen(AirDestructionGame main) {
@@ -38,8 +39,8 @@ public class GameScreen extends AbstractScreen {
 		batch = new SpriteBatch();
 		fondo = new Texture("GameFondo.jpg");
 		fondo2 = new Texture("GameFondo2.jpg");
-		jug = new Texture("snorlax.png");
-		enem1=new Texture("badlogic.jpg");
+		jug = new Texture("NaveAliada.jpg");
+		enem1=new Texture("Enemigo.jpg");
 		player = new Jugador(0,posyjugador,100,100,5,200,0,jug);
 		player.setX(calcularmitadpantX(player));
 		texturadisparo1 = new Texture("snorlax.png");
