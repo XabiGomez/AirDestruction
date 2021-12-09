@@ -7,6 +7,8 @@ public class AbstractScreen implements Screen{
 	private AirDestructionGame main;
 	public static int altura = 1000;
 	public static int anchura = 600;
+	public static float alturaProporcion = 1;
+	public static float anchuraProporcion = 1;
 	
 	public AbstractScreen(AirDestructionGame main) {
 		this.main = main;
@@ -32,7 +34,9 @@ public class AbstractScreen implements Screen{
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
 		altura = height;
+		alturaProporcion = 1000/(float)height;
 		anchura = width;
+		anchuraProporcion = 600/(float)width;
 	}
 
 	@Override
