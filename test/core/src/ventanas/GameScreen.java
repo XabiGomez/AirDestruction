@@ -135,7 +135,7 @@ public class GameScreen extends AbstractScreen {
 		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
 		float enemproX= (float) (Math.random()*((Gdx.graphics.getWidth()-tamXenempro)*10));
 		enemproX = enemproX/10;
-		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,0,enem1,1,1,texturadisparo1);
+		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,1,enem1,1,1,texturadisparo1);
 		enemigos.add(enemprovisional);
 	}
 	
