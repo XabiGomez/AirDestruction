@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+import ventanas.GameScreen;
+
 public class Enemigo1 extends Enemigo{
 	private Texture texturadisparo;
 	private float enfriamientodisparo, disparot;
@@ -31,6 +33,7 @@ public class Enemigo1 extends Enemigo{
 		setX(getX()+vel);
 		setY(getY()-getVelocidadY());
 	}
+	@Override
 	public boolean intentadisparar(ArrayList<Entidad> disparoenemigo) {
 		disparot += Gdx.graphics.getDeltaTime();
 		if(disparot>=enfriamientodisparo) {
@@ -41,8 +44,9 @@ public class Enemigo1 extends Enemigo{
 				float y = getY();
 				float altura= 25;
 				float anchura= 10;
-				int velyd = -1;
-				disparoenemigo.add(new Disparo(x,y,altura,anchura,0,0,velyd,texturadisparo));
+				int velyd = -3;
+				Texture texturadisparo1 = new Texture("snorlax.png");
+				disparoenemigo.add(new Disparo(x,y,altura,anchura,0,0,velyd,texturadisparo1));
 				return true;
 			}else {
 				return false;
@@ -51,4 +55,5 @@ public class Enemigo1 extends Enemigo{
 			return false;
 		}
 	}
+	
 }

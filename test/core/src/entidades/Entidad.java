@@ -106,4 +106,8 @@ public class Entidad implements Disposable{
 	public void mover() {
 	}
 	
+	public void perderVida(int i) {
+		setVida(getVida()-i);
+	}
+	
 }

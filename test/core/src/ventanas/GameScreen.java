@@ -23,10 +23,10 @@ public class GameScreen extends AbstractScreen {
 	private Jugador player;
 	private int posyjugador = 100;
 	private int movimientoPantalla=0;
-	private int tamainodisparoaliado=32,veldisparoaliado=10;
+	private int tamainodisparoaliado=32,veldisparoaliado=4;
 	private int tiempospawnmin = 5, tiempospawnmax= 60;
 	private float tiempospawn=0.0f,tiempoactualspawn=1.0f;
-	private float enfriamientodisparo= 0.1f, tiempodisparo=5;
+	private float enfriamientodisparo= 0.5f, tiempodisparo=5;
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
@@ -252,7 +252,7 @@ public class GameScreen extends AbstractScreen {
 				overlap = i.getSprite().getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle());
 				if(overlap) {
 					Gdx.app.log("Colision", "Personaje Tocado");
-					player.setVida(player.getVida()-1);
+					player.perderVida(1);
 					if(player.getVida()<1) {
 						GameScreen.this.dispose();
 				    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
@@ -298,7 +298,7 @@ public class GameScreen extends AbstractScreen {
 			}
 			if(enemigoselimin!=null) {
 				for(int i =0; i<enemigoselimin.size();++i) {
-					enemigoselimin.get(i).setVida(enemigoselimin.get(i).getVida()-1);
+					enemigoselimin.get(i).perderVida(1);
 					if(enemigoselimin.get(i).getVida()<1) {
 						Gdx.app.log("Colision", "Enemigo Eliminado");
 						enemigos.remove(enemigoselimin.get(i));
@@ -326,10 +326,7 @@ public class GameScreen extends AbstractScreen {
 	public void gestiondisenem() {
 		for(Entidad i: enemigos) {
 			Enemigo b = (Enemigo) i;
-			if(b.getTipo()==1) {
-				Enemigo1 a = (Enemigo1) i;
-				a.intentadisparar(disparoenemigo);
-			}
+			b.intentadisparar(disparoenemigo);
 		}
 	}
 

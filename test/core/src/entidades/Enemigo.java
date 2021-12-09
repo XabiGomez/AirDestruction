@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 
 public class Enemigo extends Entidad{
@@ -24,6 +26,11 @@ public class Enemigo extends Entidad{
 	}
 	public void setDano(int dano) {
 		this.dano = dano;
+	}
+
+	public boolean intentadisparar(ArrayList<Entidad> disparoenemigo) {
+		return false;
+		
 	}
 	
 	
