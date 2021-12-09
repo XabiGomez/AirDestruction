@@ -66,17 +66,18 @@ public class GameScreen extends AbstractScreen {
         	movimientoPantalla = 0;
         	fondo=fondo2;
         }
-        batch.draw(fondo, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
-        batch.draw(fondo2, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(fondo, 0, -movimientoPantalla, Gdx.graphics.getWidth()*AbstractScreen.anchuraProporcion, Gdx.graphics.getHeight()*AbstractScreen.alturaProporcion); 
+        batch.draw(fondo2, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth()*AbstractScreen.anchuraProporcion, Gdx.graphics.getHeight()*AbstractScreen.alturaProporcion);
         renderizarArrayList(disparoaliado);
         renderizarArrayList(enemigos);
         renderizarArrayList(disparoenemigo);
-        batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
+        batch.draw(player.getTextura(), player.getX()*AbstractScreen.anchuraProporcion, player.getY()*AbstractScreen.alturaProporcion, player.getAnchura(), player.getAltura());
+        System.out.println(player.getX()*AbstractScreen.anchuraProporcion);
         font.getData().setScale(2f);
         font.setColor(Color.RED);
         font.draw(batch, score+"", 50, 75);
         batch.end(); 
-        entradadatos();
+         entradadatos();
         gestiondecolisionesymov();
 	esperar();
         //generadordeenemigos();
@@ -114,8 +115,8 @@ public class GameScreen extends AbstractScreen {
 	public void renderizarArrayList(ArrayList<Entidad> disparoaliado2) {
 		if(disparoaliado2!=null&&disparoaliado2.size()!=0) {
 			for (int i = 0; i < disparoaliado2.size(); ++i) {
-				batch.draw(disparoaliado2.get(i).getTextura(), disparoaliado2.get(i).getX(), disparoaliado2.get(i).getY(), disparoaliado2.get(i).getAnchura(), disparoaliado2.get(i).getAltura());
-        	}
+				batch.draw(disparoaliado2.get(i).getTextura(), disparoaliado2.get(i).getX()*AbstractScreen.anchuraProporcion, disparoaliado2.get(i).getY()*AbstractScreen.alturaProporcion, disparoaliado2.get(i).getAnchura(), disparoaliado2.get(i).getAltura());
+			}
 		}
 	}
 	
