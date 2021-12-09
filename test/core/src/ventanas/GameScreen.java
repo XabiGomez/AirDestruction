@@ -72,7 +72,6 @@ public class GameScreen extends AbstractScreen {
         renderizarArrayList(enemigos);
         renderizarArrayList(disparoenemigo);
         batch.draw(player.getTextura(), player.getX()*AbstractScreen.anchuraProporcion, player.getY()*AbstractScreen.alturaProporcion, player.getAnchura(), player.getAltura());
-        System.out.println(player.getX()*AbstractScreen.anchuraProporcion);
         font.getData().setScale(2f);
         font.setColor(Color.RED);
         font.draw(batch, score+"", 50, 75);
