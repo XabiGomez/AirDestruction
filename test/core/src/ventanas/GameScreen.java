@@ -166,7 +166,7 @@ public class GameScreen extends AbstractScreen {
 	public float calcularmitadpantX(Entidad entity) {
 		return  Gdx.graphics.getWidth()/2-entity.getAnchura()/2;
 	}
-	public boolean tocaborde(Entidad entity) {
+	public static boolean tocaborde(Entidad entity) {
 		float delta= Gdx.graphics.getDeltaTime();
 		if(Gdx.graphics.getWidth()<(entity.getX()+entity.getVelocidadX()*delta+entity.getAnchura())) {
 			return true;
@@ -183,7 +183,7 @@ public class GameScreen extends AbstractScreen {
 		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
 		disparoaliado.add(shoot);
 	}
-	public boolean fueradepantalla(Entidad entity) {
+	public static boolean fueradepantalla(Entidad entity) {
 		float pantx = Gdx.graphics.getWidth();
 		float panty = Gdx.graphics.getHeight();
 		if(entity.getX()+entity.getAnchura()<0||entity.getX()>pantx) {
