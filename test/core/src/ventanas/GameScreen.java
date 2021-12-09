@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.AirDestructionGame;
 
 import entidades.*;
@@ -21,6 +22,8 @@ public class GameScreen extends AbstractScreen {
 	private Texture fondo2;
 	private Texture jug,enem1,texturadisparo1;
 	private Jugador player;
+	private HealthBar healthBar;
+	protected Stage stage;
 	private int posyjugador = 100;
 	private int movimientoPantalla=0;
 	private int tamainodisparoaliado=32,veldisparoaliado=4;
@@ -36,6 +39,7 @@ public class GameScreen extends AbstractScreen {
 	public GameScreen(AirDestructionGame main) {
 		super(main);
 		game = main;
+		stage = new Stage(game.getViewport());
 	}
 	
 	public void show() {
@@ -51,6 +55,8 @@ public class GameScreen extends AbstractScreen {
 		generarOleada();
 		//crearenem(1);
 		font = new BitmapFont();
+		healthBar = new HealthBar(200, 20);
+		healthBar.setPosition(Gdx.graphics.getWidth() - 220, 60);
 	}	
 	
 
@@ -78,8 +84,13 @@ public class GameScreen extends AbstractScreen {
         batch.end(); 
          entradadatos();
         gestiondecolisionesymov();
-	esperar();
+        esperar();
         //generadordeenemigos();
+        
+        stage.addActor(healthBar);
+		 
+		stage.act();
+	    stage.draw();
         
 	
     }
@@ -254,6 +265,7 @@ public class GameScreen extends AbstractScreen {
 				if(overlap) {
 					Gdx.app.log("Colision", "Personaje Tocado");
 					player.perderVida(1);
+					healthBar.setValue(healthBar.getValue() - 0.2f);
 					if(player.getVida()<1) {
 						GameScreen.this.dispose();
 				    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
