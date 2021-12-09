@@ -78,6 +78,7 @@ public class GameScreen extends AbstractScreen {
         batch.end(); 
         entradadatos();
         gestiondecolisionesymov();
+	esperar();
         //generadordeenemigos();
         
 	
@@ -329,7 +330,18 @@ public class GameScreen extends AbstractScreen {
 			b.intentadisparar(disparoenemigo);
 		}
 	}
-
+	public void esperar() {
+		float x = 1/30;
+		if(x>Gdx.graphics.getDeltaTime()) {
+			try {
+				Thread.sleep((long) (x-Gdx.graphics.getDeltaTime()));
+			} catch (InterruptedException e) {
+				Gdx.app.error("Error", "Error al esperar"); 
+			}
+		}
+	}
+	
+	
 	//no se usa
 	public void generadordeenemigos() {
 		if(tiempospawn<tiempoactualspawn) {
