@@ -24,7 +24,12 @@ public class Enemigo1 extends Enemigo{
 		}else if(getX()+getAnchura()>Gdx.graphics.getWidth()) {
 			vel = -getVelocidadX();
 		}
+		if(GameScreen.fueradepantalla(this)) {
+			System.out.println("afsgdpiousjfaklmsknjk");
+			setY(Gdx.graphics.getHeight());
+		}
 		setX(getX()+vel);
+		setY(getY()-getVelocidadY());
 	}
 	public boolean intentadisparar(ArrayList<Entidad> disparoenemigo) {
 		disparot += Gdx.graphics.getDeltaTime();
