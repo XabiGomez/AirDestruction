@@ -10,7 +10,7 @@ import com.badlogic.gdx.Gdx;
 
 
 public class BaseDeDatos {
-	private static Connection conn;
+		private static Connection conn;
 	
 	
 	public static boolean conexionBd( String nomBD, boolean reinicio ) {
