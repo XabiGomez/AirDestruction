@@ -5,17 +5,41 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.AirDestructionGame;
 
 import entidades.*;
 
 public class GameScreen extends AbstractScreen {
+class KeyboardProcessor extends InputAdapter {
+        
+        @Override
+		public boolean keyUp(int key) {
+            switch (key) {
+                case Keys.C:    game.dispose();
+                                game.setScreen(new GameScreen(game));
+                                break;
+
+                default:        break;
+            }
+
+            return false;
+        }
+    }
+
 	private AirDestructionGame game = new AirDestructionGame();
 	private SpriteBatch batch;
 	private Texture fondo;
@@ -36,6 +60,12 @@ public class GameScreen extends AbstractScreen {
 	int  score = 0;
 	private BitmapFont font;
 	int numOleada = 0;
+	
+	protected Skin skin;
+	boolean parar = false;
+	Table menu;
+
+	
 	public GameScreen(AirDestructionGame main) {
 		super(main);
 		game = main;
@@ -57,6 +87,20 @@ public class GameScreen extends AbstractScreen {
 		font = new BitmapFont();
 		healthBar = new HealthBar(200, 20);
 		healthBar.setPosition(Gdx.graphics.getWidth() - 220, 60);
+		
+		//boton parar
+		skin = new Skin(Gdx.files.internal("widgets//uiskin.json"));
+		TextButton botonStop = new TextButton("Stop", skin);
+		botonStop.addListener(new ChangeListener(){
+            public void changed (ChangeEvent event, Actor actor) {
+            	System.out.println("parar");
+            	parar = !parar;
+            }
+	     });
+		menu = new Table();
+		menu.setBounds(10, 850, 60, 60);
+		menu.add(botonStop).minWidth(60).padBottom(60);
+
 	}	
 	
 
@@ -82,13 +126,21 @@ public class GameScreen extends AbstractScreen {
         font.setColor(Color.RED);
         font.draw(batch, score+"", 50, 75);
         batch.end(); 
-         entradadatos();
-        gestiondecolisionesymov();
+        if(!parar) {
+        	entradadatos();
+        	gestiondecolisionesymov();
+        }
+
         esperar();
         //generadordeenemigos();
         
         stage.addActor(healthBar);
-		 
+        stage.addActor(menu);
+        InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(new KeyboardProcessor());
+		Gdx.input.setInputProcessor(multiplexer);
+
 		stage.act();
 	    stage.draw();
         
@@ -209,12 +261,11 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void gestiondisparosaliado(boolean intentadisparar,float delta) {
+		tiempodisparo+=delta;
 		if(intentadisparar) {
 			if(tiempodisparo>=enfriamientodisparo) {
 				disparaaliado();
 				tiempodisparo=0;
-			}else {
-				tiempodisparo+=delta;
 			}
 		}
 		
