@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import java.awt.event.WindowAdapter;
+
 import java.awt.event.WindowEvent;
 import java.io.File;
 
@@ -14,7 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import entidades.BaseDeDatos;
+import entidades.BD;
 import entidades.Jugador;
 import ventanas.AbstractScreen;
 import ventanas.MenuScreen;
@@ -41,14 +42,14 @@ public class AirDestructionGame extends Game{
 		MenuScreen MenuScreen = new ventanas.MenuScreen(this);
 		setScreen(MenuScreen);
 		if (new File("ranking.db").exists()) {
-			BaseDeDatos.conexionBd("ranking.db", false);
+			BD.conexionBd("ranking.db", false);
 		}else {
-			BaseDeDatos.conexionBd("ranking.db", true);
+			BD.conexionBd("ranking.db", true);
 		}
 		addWindowListener( new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				BaseDeDatos.cierreBD();
+				BD.cierreBD();
 			}
 		});
 	

@@ -1,6 +1,7 @@
 package ventanas;
 
 import java.awt.event.WindowAdapter;
+
 import java.awt.event.WindowEvent;
 import java.io.File;
 
@@ -23,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.AirDestructionGame;
 
-import entidades.BaseDeDatos;
+import entidades.BD;
 import entidades.Musica;
 
 
@@ -70,10 +71,10 @@ public class MenuScreen extends AbstractScreen{
 		Image fondo = new Image(texture);
         stage.addActor(fondo);
 		if (new File("ranking.db").exists()) {
-			BaseDeDatos.conexionBd( "ranking.db", false );
+			BD.conexionBd( "ranking.db", false );
 		}
 		else{
-			BaseDeDatos.conexionBd( "ranking.db", true );
+			BD.conexionBd( "ranking.db", true );
 		}
 		
         //reproducir musica
