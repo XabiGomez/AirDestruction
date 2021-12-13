@@ -60,7 +60,7 @@ public class BaseDeDatos {
 		}
 		
 		
-		public static boolean insertarCompra( Player player) {
+		public static boolean insertarPlayer( Player player) {
 			try (Statement statement = conn.createStatement()) {
 				String sentencia = "insert into player (id, nombre, score) values (" + player.getId() + ",'" + player.getNombre() + "'," + player.getScore() + ");";
 				Gdx.app.log( "InformacionBD", "Sentencia: " + sentencia);
