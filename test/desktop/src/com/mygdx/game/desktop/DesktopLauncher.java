@@ -21,22 +21,8 @@ public class DesktopLauncher {
 		configuracion.title = "Air Destruction";
 		new LwjglApplication(new AirDestructionGame(), configuracion);
 		//new LwjglApplication(new MenuScreen(), configuracion);
-		if (new File("ranking.bd").exists()) {
-			BaseDeDatos.conexionBd("ranking.db", false);
-		}else {
-			BaseDeDatos.conexionBd("ranking.db", true);
-		}
-		addWindowListener( new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				BaseDeDatos.cierreBD();
-			}
-		});
-	
-	}
-
-	private static void addWindowListener(WindowAdapter windowAdapter) {
-	}
+		
+}
 }
 		
 

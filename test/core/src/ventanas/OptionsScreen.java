@@ -90,7 +90,7 @@ public class OptionsScreen extends AbstractScreen{
 		TextButton botonRanking = new TextButton("Ranking",skin);
 		botonRanking.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				//mostrarRanking();
+				mostrarRanking();
 				Gdx.app.log("Ranking", "Abriendo Ranking");
 		    }
 		});
@@ -135,16 +135,7 @@ public class OptionsScreen extends AbstractScreen{
         
 	}
 	public void mostrarRanking() {
-		Vector<String> titulos = new Vector<String>( Arrays.asList( "Id", "Nombre", "Score" ) );
-		DefaultTableModel modelo = new DefaultTableModel(  
-			new Vector<Vector<Object>>(),  
-			titulos  
-		);
-		ranking = BaseDeDatos.getPlayers();
-		for (Player p : ranking) {
-		modelo.addRow(new Object[] {p.getId(),p.getNombre(),p.getScore()});
-		}
-		//JTable jtable = new JTable(modelo);
+		Table tabla = new Table();
 	}
 	@Override
     public void render(float delta) { 

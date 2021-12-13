@@ -42,8 +42,8 @@ public class GameScreen extends AbstractScreen {
 		batch = new SpriteBatch();
 		fondo = new Texture("GameFondo.jpg");
 		fondo2 = new Texture("GameFondo2.jpg");
-		jug = new Texture("NaveAliada.jpg");
-		enem1=new Texture("Enemigo.jpg");
+		jug = new Texture("NaveAliada.png");
+		enem1=new Texture("Enemigo.png");
 		player = new Jugador(0,posyjugador,100,100,5,200,0,jug);
 		player.setX(calcularmitadpantX(player));
 		texturadisparo1 = new Texture("snorlax.png");
