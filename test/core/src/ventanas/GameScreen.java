@@ -100,7 +100,10 @@ class KeyboardProcessor extends InputAdapter {
 		menu = new Table();
 		menu.setBounds(10, 850, 60, 60);
 		menu.add(botonStop).minWidth(60).padBottom(60);
-
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(new KeyboardProcessor());
+		Gdx.input.setInputProcessor(multiplexer);
 	}	
 	
 
@@ -136,10 +139,7 @@ class KeyboardProcessor extends InputAdapter {
         
         stage.addActor(healthBar);
         stage.addActor(menu);
-        InputMultiplexer multiplexer = new InputMultiplexer();
-		multiplexer.addProcessor(stage);
-		multiplexer.addProcessor(new KeyboardProcessor());
-		Gdx.input.setInputProcessor(multiplexer);
+        
 
 		stage.act();
 	    stage.draw();
@@ -333,6 +333,12 @@ class KeyboardProcessor extends InputAdapter {
 				}
 			}
 		}
+		
+	}
+	@Override
+	public void dispose() {
+		skin.dispose();
+		batch.dispose();
 		
 	}
 
