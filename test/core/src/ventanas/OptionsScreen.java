@@ -124,7 +124,7 @@ public class OptionsScreen extends AbstractScreen{
 		menu.row();
 		menu.add(botonSonido).minWidth(200).padBottom(25);
 		menu.row();
-		menu.add(botonRanking).minWidth(200);
+		menu.add(botonRanking).minWidth(200).padBottom(25);;
 		menu.row();
 		menu.add(botonSalir).minWidth(300);        
         InputMultiplexer multiplexer = new InputMultiplexer();

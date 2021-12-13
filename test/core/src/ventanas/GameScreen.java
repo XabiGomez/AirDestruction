@@ -5,37 +5,71 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.AirDestructionGame;
 
 import entidades.*;
 
 public class GameScreen extends AbstractScreen {
+class KeyboardProcessor extends InputAdapter {
+        
+        @Override
+		public boolean keyUp(int key) {
+            switch (key) {
+                case Keys.C:    game.dispose();
+                                game.setScreen(new GameScreen(game));
+                                break;
+
+                default:        break;
+            }
+
+            return false;
+        }
+    }
+
 	private AirDestructionGame game = new AirDestructionGame();
 	private SpriteBatch batch;
 	private Texture fondo;
 	private Texture fondo2;
 	private Texture jug,enem1,texturadisparo1;
 	private Jugador player;
+	private HealthBar healthBar;
+	protected Stage stage;
 	private int posyjugador = 100;
 	private int movimientoPantalla=0;
-	private int tamainodisparoaliado=32,veldisparoaliado=10;
+	private int tamainodisparoaliado=32,veldisparoaliado=4;
 	private int tiempospawnmin = 5, tiempospawnmax= 60;
 	private float tiempospawn=0.0f,tiempoactualspawn=1.0f;
-	private float enfriamientodisparo= 0.1f, tiempodisparo=5;
+	private float enfriamientodisparo= 0.5f, tiempodisparo=5;
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
 	int  score = 0;
 	private BitmapFont font;
 	int numOleada = 0;
+	
+	protected Skin skin;
+	boolean parar = false;
+	Table menu;
+
+	
 	public GameScreen(AirDestructionGame main) {
 		super(main);
 		game = main;
+		stage = new Stage(game.getViewport());
 	}
 	
 	public void show() {
@@ -51,6 +85,25 @@ public class GameScreen extends AbstractScreen {
 		generarOleada();
 		//crearenem(1);
 		font = new BitmapFont();
+		healthBar = new HealthBar(200, 20);
+		healthBar.setPosition(Gdx.graphics.getWidth() - 220, 60);
+		
+		//boton parar
+		skin = new Skin(Gdx.files.internal("widgets//uiskin.json"));
+		TextButton botonStop = new TextButton("Stop", skin);
+		botonStop.addListener(new ChangeListener(){
+            public void changed (ChangeEvent event, Actor actor) {
+            	System.out.println("parar");
+            	parar = !parar;
+            }
+	     });
+		menu = new Table();
+		menu.setBounds(10, 850, 60, 60);
+		menu.add(botonStop).minWidth(60).padBottom(60);
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(new KeyboardProcessor());
+		Gdx.input.setInputProcessor(multiplexer);
 	}	
 	
 
@@ -66,19 +119,30 @@ public class GameScreen extends AbstractScreen {
         	movimientoPantalla = 0;
         	fondo=fondo2;
         }
-        batch.draw(fondo, 0, -movimientoPantalla, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
-        batch.draw(fondo2, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(fondo, 0, -movimientoPantalla, Gdx.graphics.getWidth()*AbstractScreen.anchuraProporcion, Gdx.graphics.getHeight()*AbstractScreen.alturaProporcion); 
+        batch.draw(fondo2, 0, -movimientoPantalla+ Gdx.graphics.getHeight(), Gdx.graphics.getWidth()*AbstractScreen.anchuraProporcion, Gdx.graphics.getHeight()*AbstractScreen.alturaProporcion);
         renderizarArrayList(disparoaliado);
         renderizarArrayList(enemigos);
         renderizarArrayList(disparoenemigo);
-        batch.draw(player.getTextura(), player.getX(), player.getY(), player.getAnchura(), player.getAltura());
+        batch.draw(player.getTextura(), player.getX()*AbstractScreen.anchuraProporcion, player.getY()*AbstractScreen.alturaProporcion, player.getAnchura(), player.getAltura());
         font.getData().setScale(2f);
         font.setColor(Color.RED);
         font.draw(batch, score+"", 50, 75);
         batch.end(); 
-        entradadatos();
-        gestiondecolisionesymov();
+        if(!parar) {
+        	entradadatos();
+        	gestiondecolisionesymov();
+        }
+
+        esperar();
         //generadordeenemigos();
+        
+        stage.addActor(healthBar);
+        stage.addActor(menu);
+        
+
+		stage.act();
+	    stage.draw();
         
 	
     }
@@ -113,8 +177,8 @@ public class GameScreen extends AbstractScreen {
 	public void renderizarArrayList(ArrayList<Entidad> disparoaliado2) {
 		if(disparoaliado2!=null&&disparoaliado2.size()!=0) {
 			for (int i = 0; i < disparoaliado2.size(); ++i) {
-				batch.draw(disparoaliado2.get(i).getTextura(), disparoaliado2.get(i).getX(), disparoaliado2.get(i).getY(), disparoaliado2.get(i).getAnchura(), disparoaliado2.get(i).getAltura());
-        	}
+				batch.draw(disparoaliado2.get(i).getTextura(), disparoaliado2.get(i).getX()*AbstractScreen.anchuraProporcion, disparoaliado2.get(i).getY()*AbstractScreen.alturaProporcion, disparoaliado2.get(i).getAnchura(), disparoaliado2.get(i).getAltura());
+			}
 		}
 	}
 	
@@ -135,7 +199,7 @@ public class GameScreen extends AbstractScreen {
 		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
 		float enemproX= (float) (Math.random()*((Gdx.graphics.getWidth()-tamXenempro)*10));
 		enemproX = enemproX/10;
-		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,0,enem1,1,1,texturadisparo1);
+		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,1,enem1,1,1,texturadisparo1);
 		enemigos.add(enemprovisional);
 	}
 	
@@ -166,7 +230,7 @@ public class GameScreen extends AbstractScreen {
 	public float calcularmitadpantX(Entidad entity) {
 		return  Gdx.graphics.getWidth()/2-entity.getAnchura()/2;
 	}
-	public boolean tocaborde(Entidad entity) {
+	public static boolean tocaborde(Entidad entity) {
 		float delta= Gdx.graphics.getDeltaTime();
 		if(Gdx.graphics.getWidth()<(entity.getX()+entity.getVelocidadX()*delta+entity.getAnchura())) {
 			return true;
@@ -183,7 +247,7 @@ public class GameScreen extends AbstractScreen {
 		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
 		disparoaliado.add(shoot);
 	}
-	public boolean fueradepantalla(Entidad entity) {
+	public static boolean fueradepantalla(Entidad entity) {
 		float pantx = Gdx.graphics.getWidth();
 		float panty = Gdx.graphics.getHeight();
 		if(entity.getX()+entity.getAnchura()<0||entity.getX()>pantx) {
@@ -197,12 +261,11 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void gestiondisparosaliado(boolean intentadisparar,float delta) {
+		tiempodisparo+=delta;
 		if(intentadisparar) {
 			if(tiempodisparo>=enfriamientodisparo) {
 				disparaaliado();
 				tiempodisparo=0;
-			}else {
-				tiempodisparo+=delta;
 			}
 		}
 		
@@ -252,7 +315,8 @@ public class GameScreen extends AbstractScreen {
 				overlap = i.getSprite().getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle());
 				if(overlap) {
 					Gdx.app.log("Colision", "Personaje Tocado");
-					player.setVida(player.getVida()-1);
+					player.perderVida(1);
+					healthBar.setValue(healthBar.getValue() - 0.2f);
 					if(player.getVida()<1) {
 						GameScreen.this.dispose();
 				    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
@@ -269,6 +333,12 @@ public class GameScreen extends AbstractScreen {
 				}
 			}
 		}
+		
+	}
+	@Override
+	public void dispose() {
+		skin.dispose();
+		batch.dispose();
 		
 	}
 
@@ -298,7 +368,7 @@ public class GameScreen extends AbstractScreen {
 			}
 			if(enemigoselimin!=null) {
 				for(int i =0; i<enemigoselimin.size();++i) {
-					enemigoselimin.get(i).setVida(enemigoselimin.get(i).getVida()-1);
+					enemigoselimin.get(i).perderVida(1);
 					if(enemigoselimin.get(i).getVida()<1) {
 						Gdx.app.log("Colision", "Enemigo Eliminado");
 						enemigos.remove(enemigoselimin.get(i));
@@ -326,13 +396,21 @@ public class GameScreen extends AbstractScreen {
 	public void gestiondisenem() {
 		for(Entidad i: enemigos) {
 			Enemigo b = (Enemigo) i;
-			if(b.getTipo()==1) {
-				Enemigo1 a = (Enemigo1) i;
-				a.intentadisparar(disparoenemigo);
+			b.intentadisparar(disparoenemigo);
+		}
+	}
+	public void esperar() {
+		float x = 1/30;
+		if(x>Gdx.graphics.getDeltaTime()) {
+			try {
+				Thread.sleep((long) (x-Gdx.graphics.getDeltaTime()));
+			} catch (InterruptedException e) {
+				Gdx.app.error("Error", "Error al esperar"); 
 			}
 		}
 	}
-
+	
+	
 	//no se usa
 	public void generadordeenemigos() {
 		if(tiempospawn<tiempoactualspawn) {
