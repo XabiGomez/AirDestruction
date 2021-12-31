@@ -44,7 +44,7 @@ class KeyboardProcessor extends InputAdapter {
 	private SpriteBatch batch;
 	private Texture fondo;
 	private Texture fondo2;
-	private Texture jug,enem1,texturadisparo1;
+	private Texture jug,enem1;
 	private Jugador player;
 	private HealthBar healthBar;
 	protected Stage stage;
@@ -80,7 +80,6 @@ class KeyboardProcessor extends InputAdapter {
 		enem1=new Texture("Enemigo.png");
 		player = new Jugador(0,posyjugador,100,100,5,200,0,jug);
 		player.setX(calcularmitadpantX(player));
-		texturadisparo1 = new Texture("snorlax.png");
 		//provisional
 		generarOleada();
 		//crearenem(1);
@@ -154,10 +153,7 @@ class KeyboardProcessor extends InputAdapter {
 		numOleada=1;
 		switch (numOleada) {
 		case 1:
-			crearenem(1);
-			crearenem(1);
-			crearenem(1);
-			crearenem(1);
+			crearenem(2);
 			crearenem(1);
 			break;
 
@@ -187,7 +183,9 @@ class KeyboardProcessor extends InputAdapter {
 		case 1:
 			crearenem1();
 			break;
-
+		case 2:
+			crearenem2();
+			break;
 		default:
 			Gdx.app.error("Error", "no existe clase enemigo"); 
 			break;
@@ -197,10 +195,23 @@ class KeyboardProcessor extends InputAdapter {
 		Enemigo1 enemprovisional;
 		int tamXenempro = 70, tamYenempro = 50;
 		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
-		float enemproX= (float) (Math.random()*((Gdx.graphics.getWidth()-tamXenempro)*10));
+		float a = Gdx.graphics.getWidth()-tamXenempro;
+		float enemproX= (float) (Math.random()*(a))*10;
 		enemproX = enemproX/10;
-		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,1,enem1,1,1,texturadisparo1);
+		enemprovisional = new Enemigo1(enemproX,enemproY,tamXenempro,tamYenempro,1,1,1,enem1,1,1);
 		enemigos.add(enemprovisional);
+		System.out.println(enemprovisional);
+	}
+	public void crearenem2() {
+		Enemigo2 enemigoprovisional;
+		int tamXenempro = 70, tamYenempro = 80;
+		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
+		float a = Gdx.graphics.getWidth()-tamXenempro;
+		float enemproX= (float) (Math.random()*(a));
+		enemigoprovisional = new Enemigo2(enemproX,enemproY,tamXenempro,tamYenempro,3,1,1,enem1,1,1);
+		enemigos.add(enemigoprovisional);
+		System.out.println(enemigoprovisional);
+		
 	}
 	
     public void entradadatos() {
