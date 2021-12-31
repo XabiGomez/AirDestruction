@@ -8,13 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 import ventanas.GameScreen;
 
 public class Enemigo1 extends Enemigo{
-	private Texture texturadisparo;
 	private float enfriamientodisparo, disparot;
-	public Enemigo1(float x, float y , float altura, float anchura, int vida, int velocidadX, int velocidadY, Texture textura, int dano,int tipo,Texture texturadisparo) {
+	public Enemigo1(float x, float y , float altura, float anchura, int vida, int velocidadX, int velocidadY, Texture textura, int dano,int tipo) {
 		super(x, y, altura, anchura, vida, velocidadX, velocidadY, textura, dano, tipo);
 		enfriamientodisparo = 2.0f;
 		disparot = 0.0f;
-		this.texturadisparo = texturadisparo;
 		
 	}
 	int vel  = getVelocidadX();
@@ -27,7 +25,6 @@ public class Enemigo1 extends Enemigo{
 			vel = -getVelocidadX();
 		}
 		if(GameScreen.fueradepantalla(this)) {
-			System.out.println("afsgdpiousjfaklmsknjk");
 			setY(Gdx.graphics.getHeight());
 		}
 		setX(getX()+vel);
