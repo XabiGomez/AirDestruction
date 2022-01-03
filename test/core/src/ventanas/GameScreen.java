@@ -317,7 +317,31 @@ class KeyboardProcessor extends InputAdapter {
 		gestiondisenem();
 		moverdisparo(disparoenemigo);
 		gestiondecolisionesdisparoEnemigo();
+		GestionDeColisionConEnemigo();
 	}
+	private void GestionDeColisionConEnemigo() {
+		boolean overlap = false;
+		for(Entidad i : enemigos) {
+			overlap = i.getSprite().getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle());
+			if(overlap) {
+				Gdx.app.log("Colision", "Personaje Colisionado con Enemigo");
+				perderVida(1);
+				i.setY(Gdx.graphics.getHeight());
+			}
+		}
+		
+	}
+	
+	private void perderVida(int i) {
+		player.perderVida(1);
+		healthBar.setValue(healthBar.getValue() - 0.2f*i);
+		if(player.getVida()<1) {
+			GameScreen.this.dispose();
+	    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
+	        Gdx.app.log("Jugar", "Fin de la partida");
+		}
+	}
+
 	private void gestiondecolisionesdisparoEnemigo() {
 		if(disparoenemigo!=null&&disparoenemigo.size()>0) {
 			ArrayList<Disparo> disparoenemigoelimin = new ArrayList<>();
@@ -326,13 +350,7 @@ class KeyboardProcessor extends InputAdapter {
 				overlap = i.getSprite().getBoundingRectangle().overlaps(player.getSprite().getBoundingRectangle());
 				if(overlap) {
 					Gdx.app.log("Colision", "Personaje Tocado");
-					player.perderVida(1);
-					healthBar.setValue(healthBar.getValue() - 0.2f);
-					if(player.getVida()<1) {
-						GameScreen.this.dispose();
-				    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
-				        Gdx.app.log("Jugar", "Fin de la partida");
-					}
+					perderVida(1);
 					disparoenemigoelimin.add((Disparo) i);
 					overlap=false;
 					break;
