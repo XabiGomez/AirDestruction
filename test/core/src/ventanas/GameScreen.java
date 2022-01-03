@@ -54,12 +54,13 @@ class KeyboardProcessor extends InputAdapter {
 	private int tiempospawnmin = 5, tiempospawnmax= 60;
 	private float tiempospawn=0.0f,tiempoactualspawn=1.0f;
 	private float enfriamientodisparo= 0.5f, tiempodisparo=5;
+	private float propenem1=70,propenem2=30;
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
 	int  score = 0;
 	private BitmapFont font;
-	int numOleada = 0;
+	int numOleada = 10;
 	
 	protected Skin skin;
 	boolean parar = false;
@@ -149,24 +150,22 @@ class KeyboardProcessor extends InputAdapter {
 
 	
 	private void generarOleada() {
-		//numOleada++;
-		numOleada=1;
-		switch (numOleada) {
-		case 1:
-			crearenem(2);
-			crearenem(1);
-			break;
-
-		default:
-			Gdx.app.error("Error", "no existe ese numero de oleada"); 
-			break;
+		for(int i=0; i<numOleada; ++i) {
+			double x = Math.random()*100 + 1;
+			System.out.println(x);
+			if(x<propenem1) {
+				crearenem(1);
+			}else if(x<(propenem2+propenem1)&&x>=propenem1) {
+				crearenem(2);
+			}
 		}
+		numOleada=2+numOleada;
 	}
 	
 
 	private void moverEnemigos() {
-		for (Entidad i :enemigos) {
-			i.mover();
+		for (int i=0;i<enemigos.size();++i) {
+			enemigos.get(i).mover();
 		}	
 	}
 
@@ -314,11 +313,13 @@ class KeyboardProcessor extends InputAdapter {
 		moverdisparo(disparoaliado);
 		moverEnemigos();
 		gestiondecolisionesdisparoaliado();
+		colisionesentredisparo();
 		gestiondisenem();
 		moverdisparo(disparoenemigo);
 		gestiondecolisionesdisparoEnemigo();
 		GestionDeColisionConEnemigo();
 	}
+	
 	private void GestionDeColisionConEnemigo() {
 		boolean overlap = false;
 		for(Entidad i : enemigos) {
@@ -329,9 +330,8 @@ class KeyboardProcessor extends InputAdapter {
 				i.setY(Gdx.graphics.getHeight());
 			}
 		}
-		
+
 	}
-	
 	private void perderVida(int i) {
 		player.perderVida(1);
 		healthBar.setValue(healthBar.getValue() - 0.2f*i);
@@ -341,7 +341,7 @@ class KeyboardProcessor extends InputAdapter {
 	        Gdx.app.log("Jugar", "Fin de la partida");
 		}
 	}
-
+	
 	private void gestiondecolisionesdisparoEnemigo() {
 		if(disparoenemigo!=null&&disparoenemigo.size()>0) {
 			ArrayList<Disparo> disparoenemigoelimin = new ArrayList<>();
@@ -381,7 +381,7 @@ class KeyboardProcessor extends InputAdapter {
 					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
 					if(overlap) {
 						Gdx.app.log("Colision", "Enemigo Tocado");
-						score += 1;
+						
 						System.out.println(score);
 						disparoaliadoelimin.add((Disparo) i);
 						enemigoselimin.add((Enemigo) j);
@@ -401,6 +401,7 @@ class KeyboardProcessor extends InputAdapter {
 					if(enemigoselimin.get(i).getVida()<1) {
 						Gdx.app.log("Colision", "Enemigo Eliminado");
 						enemigos.remove(enemigoselimin.get(i));
+						score += 1;
 					}
 					if (enemigos.isEmpty()) {
 						//Espera medio segundo antes de generar la siguiente oleada
@@ -417,6 +418,42 @@ class KeyboardProcessor extends InputAdapter {
 							}
 						};
 						esperar.start();
+					}
+				}
+			}
+		}
+	}
+	
+	public void colisionesentredisparo() {
+		if(disparoaliado!=null&&disparoaliado.size()>0&&disparoenemigo!=null&&disparoenemigo.size()>0) {
+			ArrayList<Disparo> disenemigoelimin = new ArrayList<>();
+			ArrayList<Disparo> disparoaliadoelimin = new ArrayList<>();
+			boolean overlap=false;
+			for(Entidad i : disparoaliado) {
+				for(Entidad j :disparoenemigo) {
+					overlap = i.getSprite().getBoundingRectangle().overlaps(j.getSprite().getBoundingRectangle());
+					if(overlap) {
+						Gdx.app.log("Colision", "Disparos Colisionan");
+						disenemigoelimin.add((Disparo) j);
+						disparoaliadoelimin.add((Disparo) i);
+						overlap=false;
+						break;
+					}
+				}
+			}
+			if(disenemigoelimin!=null&&!disenemigoelimin.isEmpty()) {
+				for(int i =0; i<disenemigoelimin.size();++i) {
+					disenemigoelimin.get(i).perderVida(1);
+					if(disenemigoelimin.get(i).getVida()<1) {
+						disparoenemigo.remove(disenemigoelimin.get(i));
+					}
+				}
+			}
+			if(disparoaliadoelimin!=null&&!disparoaliadoelimin.isEmpty()) {
+				for(int i =0; i<disparoaliadoelimin.size();++i) {
+					disparoaliadoelimin.get(i).perderVida(1);
+					if(disparoaliadoelimin.get(i).getVida()<1) {
+						disparoaliado.remove(disparoaliadoelimin.get(i));
 					}
 				}
 			}
@@ -450,6 +487,4 @@ class KeyboardProcessor extends InputAdapter {
 			tiempoactualspawn+=Gdx.graphics.getDeltaTime();
 		}
 	}
-	
-	
 }
