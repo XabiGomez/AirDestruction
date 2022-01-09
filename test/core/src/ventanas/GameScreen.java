@@ -58,7 +58,7 @@ class KeyboardProcessor extends InputAdapter {
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
-	int  score = 0;
+	int  score;
 	private BitmapFont font;
 	int numOleada = 10;
 	
@@ -336,6 +336,10 @@ class KeyboardProcessor extends InputAdapter {
 		player.perderVida(1);
 		healthBar.setValue(healthBar.getValue() - 0.2f*i);
 		if(player.getVida()<1) {
+			Player player = new Player(1, MenuScreen.getNombre(), score);
+			BD.conexionBd("ranking.db", false);
+			BD.insertarPlayer(player);
+			BD.cierreBD();
 			GameScreen.this.dispose();
 	    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
 	        Gdx.app.log("Jugar", "Fin de la partida");

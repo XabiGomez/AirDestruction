@@ -26,6 +26,7 @@ import com.mygdx.game.AirDestructionGame;
 
 import entidades.BD;
 import entidades.Musica;
+import entidades.Player;
 
 
 
@@ -50,7 +51,7 @@ public class MenuScreen extends AbstractScreen{
 	
 	private SpriteBatch batch = new SpriteBatch();;
 	private Texture texture;
-	
+	private static String j;
 	private AirDestructionGame game = new AirDestructionGame();
 	public GameScreen GameScreen;
 	 
@@ -70,13 +71,13 @@ public class MenuScreen extends AbstractScreen{
 		texture = new Texture("GameFondo.jpg");
 		Image fondo = new Image(texture);
         stage.addActor(fondo);
-		if (new File("ranking.db").exists()) {
+		/*if (new File("ranking.db").exists()) {
 			BD.conexionBd( "ranking.db", false );
 		}
 		else{
 			BD.conexionBd( "ranking.db", true );
 		}
-		
+		*/
         //reproducir musica
       	if (Musica.getMusic() == null) {
       		Musica.reproducirMusica();
@@ -100,7 +101,7 @@ public class MenuScreen extends AbstractScreen{
             	MenuScreen.this.dispose();
             	MenuScreen.this.game.setScreen(new GameScreen(MenuScreen.this.game));    
             	Gdx.app.log("Jugar", "Entrando a la partida"); 
-				String j = JOptionPane.showInputDialog(null, "Introduzca el nombre de jugador:", "Ejemplo: Maria");
+            	j = JOptionPane.showInputDialog(null, "Introduzca el nombre de jugador:", "Ejemplo: Maria");
 				while (j==null){
 					j = JOptionPane.showInputDialog(null, "Introduzca el nombre de jugador:", "Ejemplo: Maria");
 				}
@@ -147,7 +148,9 @@ public class MenuScreen extends AbstractScreen{
 		Gdx.input.setInputProcessor(multiplexer);
         
 	}
-	
+	public static String getNombre() {
+		return j;
+	}
 	@Override
     public void render(float delta) { 
         Gdx.gl.glClearColor(0, 0, 1, 1);
