@@ -58,7 +58,7 @@ class KeyboardProcessor extends InputAdapter {
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
-	int  score;
+	int score;
 	private BitmapFont font;
 	int numOleada = 10;
 	
