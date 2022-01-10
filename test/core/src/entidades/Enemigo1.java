@@ -15,7 +15,7 @@ public class Enemigo1 extends Enemigo{
 		disparot = 0.0f;
 		
 	}
-	int vel  = getVelocidadX();
+	float vel  = getVelocidadX();
 	@Override
 	public void mover() {
 		

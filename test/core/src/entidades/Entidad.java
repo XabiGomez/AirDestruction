@@ -6,11 +6,12 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class Entidad implements Disposable{
 
-	private int vida, velocidadX, velocidadY;
+	private int vida;
+	private float velocidadX, velocidadY;
 	protected Texture textura;
 	protected Sprite sprite;
 	
-	public Entidad(float x, float y , float altura, float anchura, int vida, int velocidadX, int velocidadY, Texture textura) {
+	public Entidad(float x, float y , float altura, float anchura, int vida, float velocidadX, float velocidadY, Texture textura) {
 		this.vida = vida;
 		this.velocidadX = velocidadX;
 		this.velocidadY = velocidadY;
@@ -78,19 +79,19 @@ public class Entidad implements Disposable{
 		this.sprite = sprite;
 	}
 	
-	public int getVelocidadX() {
+	public float getVelocidadX() {
 		return velocidadX;
 	}
 
-	public void setVelocidadX(int velocidadX) {
-		this.velocidadX = velocidadX;
+	public void setVelocidadX(float f) {
+		this.velocidadX = f;
 	}
 
-	public int getVelocidadY() {
+	public float getVelocidadY() {
 		return velocidadY;
 	}
 
-	public void setVelocidadY(int velocidadY) {
+	public void setVelocidadY(float velocidadY) {
 		this.velocidadY = velocidadY;
 	}
 

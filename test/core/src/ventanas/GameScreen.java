@@ -45,7 +45,7 @@ class KeyboardProcessor extends InputAdapter {
 	private Texture fondo;
 	private Texture fondo2;
 	private Texture jug,enem1;
-	private Jugador player;
+	private static Jugador player;
 	private HealthBar healthBar;
 	protected Stage stage;
 	private int posyjugador = 100;
@@ -150,6 +150,7 @@ class KeyboardProcessor extends InputAdapter {
 
 	
 	private void generarOleada() {
+		
 		for(int i=0; i<numOleada; ++i) {
 			double x = Math.random()*100 + 1;
 			System.out.println(x);
@@ -160,6 +161,7 @@ class KeyboardProcessor extends InputAdapter {
 			}
 		}
 		numOleada=2+numOleada;
+		
 	}
 	
 
@@ -185,6 +187,9 @@ class KeyboardProcessor extends InputAdapter {
 		case 2:
 			crearenem2();
 			break;
+		case 3:
+			crearenem3();
+			break;
 		default:
 			Gdx.app.error("Error", "no existe clase enemigo"); 
 			break;
@@ -208,6 +213,17 @@ class KeyboardProcessor extends InputAdapter {
 		float a = Gdx.graphics.getWidth()-tamXenempro;
 		float enemproX= (float) (Math.random()*(a));
 		enemigoprovisional = new Enemigo2(enemproX,enemproY,tamXenempro,tamYenempro,3,1,1,enem1,1,1);
+		enemigos.add(enemigoprovisional);
+		System.out.println(enemigoprovisional);
+		
+	}
+	public void crearenem3() {
+		Enemigo3 enemigoprovisional;
+		int tamXenempro = 70, tamYenempro = 80;
+		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
+		float a = Gdx.graphics.getWidth()-tamXenempro;
+		float enemproX= (float) (Math.random()*(a));
+		enemigoprovisional = new Enemigo3(enemproX,enemproY,tamXenempro,tamYenempro,3,1,1,enem1,1,1);
 		enemigos.add(enemigoprovisional);
 		System.out.println(enemigoprovisional);
 		
@@ -328,6 +344,9 @@ class KeyboardProcessor extends InputAdapter {
 				Gdx.app.log("Colision", "Personaje Colisionado con Enemigo");
 				perderVida(1);
 				i.setY(Gdx.graphics.getHeight());
+				if (i instanceof Enemigo3) {
+					((Enemigo3) i).control();
+				}
 			}
 		}
 
@@ -480,6 +499,13 @@ class KeyboardProcessor extends InputAdapter {
 		}
 	}
 	
+	public static float getPosYJugador() {
+		return player.getY();	
+	}
+	
+	public static float getPosXJugador() {
+		return player.getX();	
+	}
 	
 	//no se usa
 	public void generadordeenemigos() {
