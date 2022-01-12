@@ -150,7 +150,6 @@ class KeyboardProcessor extends InputAdapter {
 
 	
 	private void generarOleada() {
-		
 		for(int i=0; i<numOleada; ++i) {
 			double x = Math.random()*100 + 1;
 			System.out.println(x);
@@ -190,6 +189,9 @@ class KeyboardProcessor extends InputAdapter {
 		case 3:
 			crearenem3();
 			break;
+		case 4:
+			crearenem4();
+			break;
 		default:
 			Gdx.app.error("Error", "no existe clase enemigo"); 
 			break;
@@ -212,7 +214,7 @@ class KeyboardProcessor extends InputAdapter {
 		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
 		float a = Gdx.graphics.getWidth()-tamXenempro;
 		float enemproX= (float) (Math.random()*(a));
-		enemigoprovisional = new Enemigo2(enemproX,enemproY,tamXenempro,tamYenempro,3,1,1,enem1,1,1);
+		enemigoprovisional = new Enemigo2(enemproX,enemproY,tamYenempro,tamXenempro,3,1,1,enem1,1,1);
 		enemigos.add(enemigoprovisional);
 		System.out.println(enemigoprovisional);
 		
@@ -223,7 +225,18 @@ class KeyboardProcessor extends InputAdapter {
 		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
 		float a = Gdx.graphics.getWidth()-tamXenempro;
 		float enemproX= (float) (Math.random()*(a));
-		enemigoprovisional = new Enemigo3(enemproX,enemproY,tamXenempro,tamYenempro,3,1,1,enem1,1,1);
+		enemigoprovisional = new Enemigo3(enemproX,enemproY,tamYenempro,tamXenempro,3,1,1,enem1,1,1);
+		enemigos.add(enemigoprovisional);
+		System.out.println(enemigoprovisional);
+		
+	}
+	public void crearenem4() {
+		Enemigo4 enemigoprovisional;
+		int tamXenempro = 300, tamYenempro = 80;
+		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
+		float a = Gdx.graphics.getWidth()-tamXenempro;
+		float enemproX= (float) (Math.random()*(a));
+		enemigoprovisional = new Enemigo4(enemproX,enemproY,tamYenempro,tamXenempro,20,1,1,enem1,1,1);
 		enemigos.add(enemigoprovisional);
 		System.out.println(enemigoprovisional);
 		
