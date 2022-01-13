@@ -7,7 +7,7 @@ import com.badlogic.gdx.audio.Music;
 public class Musica {
 
 	private static Music music;
-	private static float volumenPred = 0.2f;
+	private static float volumenPred = 0.1f;
 	
 	
 	public static Music getMusic() {
@@ -20,6 +20,7 @@ public class Musica {
 
 	public static void reproducirMusica() {
 		music = Gdx.audio.newMusic(Gdx.files.getFileHandle("musica.mp3", FileType.Internal));
+		music.setVolume(volumenPred);
 		music.play();
 		music.setLooping(true);
 	}

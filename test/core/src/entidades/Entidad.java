@@ -11,6 +11,18 @@ public class Entidad implements Disposable{
 	protected Texture textura;
 	protected Sprite sprite;
 	
+	/**
+	 * Clase padre los objetos en pantalla
+	 * @param x				float Marca su posicion en x
+	 * @param y				float Marca su posicion en y
+	 * @param altura		float Marca la altura del sprite
+	 * @param anchura		float Marca la anchura del sprite
+	 * @param vida			int Dice la vida del enemigo
+	 * @param velocidadX	float Marca la velocidad en x del enemigo
+	 * @param velocidadY	float Marca la velocidad en y del enemigo
+	 * @param textura		Textura Marca la velocidad en y del enemigo
+	 * 
+	 */
 	public Entidad(float x, float y , float altura, float anchura, int vida, float velocidadX, float velocidadY, Texture textura) {
 		this.vida = vida;
 		this.velocidadX = velocidadX;
