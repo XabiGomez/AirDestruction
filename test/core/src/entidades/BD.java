@@ -30,8 +30,7 @@ public class BD {
 					while (scanner.hasNextLine()) {
 						String linea = scanner.nextLine();
 						String[] valores = linea.split( " " );
-						System.out.println(valores);
-						id ++;
+						Gdx.app.log("InformacionBD","Valores" +valores);
 						sentencia = "insert into player (id, nombre, score) values (" + valores[0] + ",'" + valores[1] + "'," + valores[2] + ");";
 						Gdx.app.log( "InformacionBD", "Sentencia: " + sentencia );
 						statement.executeUpdate( sentencia );
@@ -41,6 +40,7 @@ public class BD {
 					Gdx.app.error( "BD", "Excepcion:", e );
 				}
 			}
+			id= getPlayers().size();
 			return true;
 		} catch(Exception e) {
 			Gdx.app.error( "BD", "Excepcion:", e );
@@ -62,7 +62,7 @@ public class BD {
 		public static boolean insertarPlayer( Player player) {
 			try (Statement statement = conn.createStatement()) {
 				id ++;
-				System.out.println(id);
+				Gdx.app.log("InformacionBD", "Numero de Personas ranking " + id);
 				String sentencia = "insert into player (id, nombre, score) values (" + id + ",'" + player.getNombre() + "'," + player.getScore() + ");";
 				Gdx.app.log( "InformacionBD", "Sentencia: " + sentencia);
 				int insert = statement.executeUpdate( sentencia );
@@ -87,7 +87,7 @@ public class BD {
 				while( result.next() ) {
 					int id = result.getInt("id");
 					String nombre = result.getString("nombre");
-					int score = result.getInt("result");
+					int score = result.getInt("score");
 					list.add(new Player(id,nombre, score));		
 				}
 				return list;
