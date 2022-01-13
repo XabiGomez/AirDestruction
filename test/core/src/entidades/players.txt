@@ -1,5 +1,5 @@
 1 Rodrigo 10
-14 xabier 20
-23 Luis 15
-44 Iñigo 12
-63 Lucia 14
+2 Xabier 20
+3 Luis 15
+4 Iñigo 12
+5 Lucia 14

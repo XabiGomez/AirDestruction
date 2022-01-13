@@ -9,7 +9,7 @@ import com.badlogic.gdx.Gdx;
 
 public class BD {
 		private static Connection conn;
-	
+		public static int id=0;
 	
 	public static boolean conexionBd( String nomBD, boolean reinicio ) {
 		try {
@@ -31,6 +31,7 @@ public class BD {
 						String linea = scanner.nextLine();
 						String[] valores = linea.split( " " );
 						System.out.println(valores);
+						id ++;
 						sentencia = "insert into player (id, nombre, score) values (" + valores[0] + ",'" + valores[1] + "'," + valores[2] + ");";
 						Gdx.app.log( "InformacionBD", "Sentencia: " + sentencia );
 						statement.executeUpdate( sentencia );
@@ -60,7 +61,9 @@ public class BD {
 		
 		public static boolean insertarPlayer( Player player) {
 			try (Statement statement = conn.createStatement()) {
-				String sentencia = "insert into player (id, nombre, score) values (" + player.getId() + ",'" + player.getNombre() + "'," + player.getScore() + ");";
+				id ++;
+				System.out.println(id);
+				String sentencia = "insert into player (id, nombre, score) values (" + id + ",'" + player.getNombre() + "'," + player.getScore() + ");";
 				Gdx.app.log( "InformacionBD", "Sentencia: " + sentencia);
 				int insert = statement.executeUpdate( sentencia );
 				if (insert!=1) return false;  
@@ -77,7 +80,7 @@ public class BD {
 	
 		public static ArrayList<Player> getPlayers() {
 			try (Statement statement = conn.createStatement()) {
-				String sentencia = "select * from player;";
+				String sentencia = "select * from player order by score asc;";
 				Gdx.app.log( "InformacionBD", "Sentencia: " + sentencia );
 				ResultSet result = statement.executeQuery( sentencia );
 				ArrayList<Player> list = new ArrayList<>();

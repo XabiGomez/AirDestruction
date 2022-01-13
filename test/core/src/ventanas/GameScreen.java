@@ -50,7 +50,7 @@ class KeyboardProcessor extends InputAdapter {
 	private HealthBar healthBar;
 	protected Stage stage;
 	Sound morir = Gdx.audio.newSound(Gdx.files.internal("morir.mp3"));
-	Sound danyo = Gdx.audio.newSound(Gdx.files.internal("daño.mp3"));
+	Sound danyo = Gdx.audio.newSound(Gdx.files.internal("dano.mp3"));
 	Sound disparoSonido = Gdx.audio.newSound(Gdx.files.internal("disparo.mp3"));
 	private int posyjugador = 100;
 	private int movimientoPantalla=0;

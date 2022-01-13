@@ -50,7 +50,6 @@ public class OptionsScreen extends AbstractScreen{
 	
 	private AirDestructionGame game = new AirDestructionGame();
 	public GameScreen GameScreen;
-	private ArrayList<Player> ranking;
 	private SpriteBatch batch = new SpriteBatch();;
 	
 	protected Stage stage;
