@@ -58,7 +58,7 @@ class KeyboardProcessor extends InputAdapter {
 	private int tiempospawnmin = 5, tiempospawnmax= 60;
 	private float tiempospawn=0.0f,tiempoactualspawn=1.0f;
 	private float enfriamientodisparo= 0.5f, tiempodisparo=5;
-	private float propenem1=70,propenem2=30;
+	private float propenem1=50,propenem2=17,propenem3=30,propenem4=3;
 	ArrayList<Entidad> disparoaliado = new ArrayList<Entidad>();
 	ArrayList<Entidad> enemigos = new ArrayList<Entidad>();
 	ArrayList<Entidad> disparoenemigo = new ArrayList<Entidad>();
@@ -161,6 +161,10 @@ class KeyboardProcessor extends InputAdapter {
 				crearenem(1);
 			}else if(x<(propenem2+propenem1)&&x>=propenem1) {
 				crearenem(2);
+			}else if(x<(propenem2+propenem1+propenem3)&&x>=(propenem1+propenem2)) {
+				crearenem(3);
+			}else if(x<(propenem2+propenem1+propenem3+propenem4)&&x>=(propenem1+propenem2+propenem3)) {
+				crearenem(4);
 			}
 		}
 		numOleada=2+numOleada;
