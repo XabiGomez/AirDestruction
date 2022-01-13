@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -48,6 +49,9 @@ class KeyboardProcessor extends InputAdapter {
 	private static Jugador player;
 	private HealthBar healthBar;
 	protected Stage stage;
+	Sound morir = Gdx.audio.newSound(Gdx.files.internal("morir.mp3"));
+	Sound danyo = Gdx.audio.newSound(Gdx.files.internal("daño.mp3"));
+	Sound disparoSonido = Gdx.audio.newSound(Gdx.files.internal("disparo.mp3"));
 	private int posyjugador = 100;
 	private int movimientoPantalla=0;
 	private int tamainodisparoaliado=32,veldisparoaliado=4;
@@ -284,6 +288,7 @@ class KeyboardProcessor extends InputAdapter {
 		Texture textshoot = new Texture("badlogic.jpg");
 		int veldisparoY = 0;
 		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
+		disparoSonido.play(0.5f);
 		disparoaliado.add(shoot);
 	}
 	public static boolean fueradepantalla(Entidad entity) {
@@ -366,8 +371,10 @@ class KeyboardProcessor extends InputAdapter {
 	}
 	private void perderVida(int i) {
 		player.perderVida(1);
+		danyo.play(0.5f);
 		healthBar.setValue(healthBar.getValue() - 0.2f*i);
 		if(player.getVida()<1) {
+			morir.play(0.5f);
 			Player player = new Player(1, MenuScreen.getNombre(), score);
 			BD.conexionBd("ranking.db", false);
 			BD.insertarPlayer(player);
