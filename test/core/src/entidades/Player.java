@@ -11,7 +11,7 @@ public class Player {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.score = 0;
+		this.score = score;
 	}
 
 	public int getId() {

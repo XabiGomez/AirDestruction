@@ -1,13 +1,5 @@
 package ventanas;
 
-import java.util.ArrayList;
-
-
-import java.util.Arrays;
-import java.util.Vector;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import com.badlogic.gdx.Gdx;
 
@@ -25,9 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.AirDestructionGame;
 
-import entidades.BD;
 import entidades.Musica;
-import entidades.Player;
 
 
 
@@ -91,7 +81,8 @@ public class OptionsScreen extends AbstractScreen{
 		TextButton botonRanking = new TextButton("Ranking",skin);
 		botonRanking.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				mostrarRanking();
+				OptionsScreen.this.dispose();
+                OptionsScreen.this.game.setScreen(new ScoreScreen(OptionsScreen.this.game));	
 				Gdx.app.log("Ranking", "Abriendo Ranking");
 		    }
 		});
@@ -134,9 +125,6 @@ public class OptionsScreen extends AbstractScreen{
 		Gdx.input.setInputProcessor(multiplexer);
 
         
-	}
-	public void mostrarRanking() {
-		Table tabla = new Table();
 	}
 	@Override
     public void render(float delta) { 
