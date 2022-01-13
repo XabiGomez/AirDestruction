@@ -80,7 +80,7 @@ public class BD {
 	
 		public static ArrayList<Player> getPlayers() {
 			try (Statement statement = conn.createStatement()) {
-				String sentencia = "select * from player order by score asc;";
+				String sentencia = "select * from player order by score desc;";
 				Gdx.app.log( "InformacionBD", "Sentencia: " + sentencia );
 				ResultSet result = statement.executeQuery( sentencia );
 				ArrayList<Player> list = new ArrayList<>();
