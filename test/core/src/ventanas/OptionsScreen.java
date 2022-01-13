@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.AirDestructionGame;
 
 import entidades.Musica;
+import entidades.Sonidos;
 
 
 
@@ -66,7 +67,7 @@ public class OptionsScreen extends AbstractScreen{
 		
 		//slider
 		final Slider slider = new Slider(0, 100, 0.1f, false, skin);
-		slider.setValue(20);
+		slider.setValue(10);
 				
 		slider.addListener(new ChangeListener() {
 
@@ -74,6 +75,9 @@ public class OptionsScreen extends AbstractScreen{
 	        public void changed(ChangeEvent event, Actor actor) {
 	            if (slider.isDragging())
 	                Musica.getMusic().setVolume(slider.getValue() / 100f);
+		            Sonidos.getDanyo().setVolume(slider.getValue() / 100f);
+	            	Sonidos.getDisparoSonido().setVolume(slider.getValue() / 100f);
+	            	Sonidos.getMorir().setVolume(slider.getValue() / 100f);
 	        }
 	    });
 		
@@ -107,6 +111,7 @@ public class OptionsScreen extends AbstractScreen{
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 Musica.apagarMusica();
+                Sonidos.apagarSonidos();
                 slider.setValue(0);
             }
         });
