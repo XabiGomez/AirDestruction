@@ -59,7 +59,7 @@ class KeyboardProcessor extends InputAdapter {
 	}
 	
 	public void show() {
-		
+		BD.conexionBd("ranking.db", false);
 		//Crear una tabla "Menu"
 		Table menu = new Table();
 		menu.setFillParent(true);
@@ -67,6 +67,7 @@ class KeyboardProcessor extends InputAdapter {
 		stage.addActor(menu);
 		
 		ArrayList<Player> list = BD.getPlayers();
+		BD.cierreBD();
 		if (list.size()<15) {
 			for (int i = 0 ; i<list.size(); i++) {
 				Label frase = new Label(i+1+"º "+list.get(i).getNombre()+ " con "+ list.get(i).getScore()+ " puntos" , skin);
