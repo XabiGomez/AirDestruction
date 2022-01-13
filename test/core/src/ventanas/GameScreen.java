@@ -381,7 +381,7 @@ class KeyboardProcessor extends InputAdapter {
 			BD.insertarPlayer(player);
 			BD.cierreBD();
 			GameScreen.this.dispose();
-	    	GameScreen.this.game.setScreen(new MenuScreen(GameScreen.this.game));
+			GameScreen.this.game.setScreen(new MuerteScreen(GameScreen.this.game, score));
 	        Gdx.app.log("Jugar", "Fin de la partida");
 		}
 	}

@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -93,6 +94,9 @@ public class MenuScreen extends AbstractScreen{
 		menu.setFillParent(true);
 		menu.center();
 		
+		Label titulo= new Label("Air Destruction", skin);
+		titulo.setFontScale(4f, 4f);
+		
 		//Boton jugar
 		TextButton botonJugar = new TextButton("Jugar", skin);
 
@@ -133,6 +137,8 @@ public class MenuScreen extends AbstractScreen{
         });	
 		
 		//Anyadir botones a la tabla
+		menu.add(titulo).minWidth(300).padBottom(200);
+        menu.row();
 		menu.add(botonJugar).minWidth(200).padBottom(25);
         menu.row();
         menu.add(botonOpciones).minWidth(200).padBottom(25);
