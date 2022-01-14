@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -71,12 +72,14 @@ class KeyboardProcessor extends InputAdapter {
 		if (list.size()<15) {
 			for (int i = 0 ; i<list.size(); i++) {
 				Label frase = new Label(i+1+"º "+list.get(i).getNombre()+ " con "+ list.get(i).getScore()+ " puntos" , skin);
+				frase.setColor(Color.WHITE);
 				menu.add(frase);
 				menu.row();
 			}
 		}else {
 			for (int i = 0 ; i<15; i++) {
-				Label frase = new Label(i+"º "+list.get(i).getNombre()+ " con "+ list.get(i).getScore(), skin);
+				Label frase = new Label(i+1+"º "+list.get(i).getNombre()+ " con "+ list.get(i).getScore()+ " puntos", skin);
+				frase.setColor(Color.WHITE);
 				menu.add(frase);
 				menu.row();
 			}
@@ -111,7 +114,7 @@ class KeyboardProcessor extends InputAdapter {
 	}
 	@Override
     public void render(float delta) { 
-        Gdx.gl.glClearColor(0, 0, 1, 1);
+		Gdx.gl.glClearColor(95/255f, 216/255f, 233/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 
         batch.begin();       

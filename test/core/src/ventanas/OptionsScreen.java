@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -68,7 +69,7 @@ public class OptionsScreen extends AbstractScreen{
 		//slider
 		final Slider slider = new Slider(0, 100, 0.1f, false, skin);
 		slider.setValue(10);
-				
+		
 		slider.addListener(new ChangeListener() {
 
 	        @Override
@@ -133,7 +134,7 @@ public class OptionsScreen extends AbstractScreen{
 	}
 	@Override
     public void render(float delta) { 
-        Gdx.gl.glClearColor(0, 0, 1, 1);
+		Gdx.gl.glClearColor(95/255f, 216/255f, 233/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 
         batch.begin();       
