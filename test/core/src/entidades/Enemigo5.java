@@ -50,7 +50,7 @@ public class Enemigo5 extends Enemigo{
 		if(disparot>=enfriamientodisparo) {
 			disparot=0.0f;
 			int recursividad = 3;
-			Texture texturadisparo1 = new Texture("snorlax.png");
+			Texture texturadisparo1 = new Texture("bosslaser.png");
 			disparoenemigo.add(new Disparo(getX()+(getAnchura()/2),getY(),30,30,0,0,-1,texturadisparo1));
 			disparoRec(recursividad, recursividad, disparoenemigo);
 			return true;
@@ -64,7 +64,7 @@ public class Enemigo5 extends Enemigo{
 			float angulo = recursividad*anguloMax/inicio;
 			float vely = (float) Math.cos(angulo*Math.PI/180);
 			float velx = (float) Math.sin(angulo*Math.PI/180);
-			Texture texturadisparo1 = new Texture("snorlax.png");
+			Texture texturadisparo1 = new Texture("bosslaser.png");
 			disparoenemigo.add(new Disparo(getX()+(getAnchura()/2),getY(),30,30,0,velx,-vely,texturadisparo1));
 			disparoenemigo.add(new Disparo(getX()+(getAnchura()/2),getY(),30,30,0,-velx,-vely,texturadisparo1));
 			disparoRec(recursividad - 1, inicio, disparoenemigo);

@@ -55,7 +55,7 @@ public class Enemigo2 extends Enemigo{
 				float altura= 50;
 				float anchura= 50;
 				int velyd = -1;
-				Texture texturadisparo1 = new Texture("snorlax.png");
+				Texture texturadisparo1 = new Texture("disparoEnemigo2.png");
 				disparoenemigo.add(new Disparo(x,y,altura,anchura,0,0,velyd,texturadisparo1));
 				return true;
 			}else {

@@ -304,7 +304,7 @@ class KeyboardProcessor extends InputAdapter {
 	}
 	
 	public void disparaaliado() {
-		Texture textshoot = new Texture("badlogic.jpg");
+		Texture textshoot = new Texture("laser aliado.png");
 		int veldisparoY = 0;
 		Disparo shoot = new Disparo(player.getX()+player.getAnchura()/2-tamainodisparoaliado/2, player.getY(), tamainodisparoaliado, tamainodisparoaliado, 1, veldisparoY, veldisparoaliado, textshoot);
 		Sonidos.reproducirDisparoSonido();

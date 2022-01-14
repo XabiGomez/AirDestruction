@@ -56,7 +56,7 @@ public class Enemigo4 extends Enemigo{
 				float altura= 50;
 				float anchura= 50;
 				int velyd = -3;
-				Texture texturadisparo1 = new Texture("snorlax.png");
+				Texture texturadisparo1 = new Texture("bosslaser.png");
 				disparoenemigo.add(new Disparo(x,y,altura,anchura,0,0,velyd,texturadisparo1));
 				return true;
 			}else{
@@ -64,7 +64,7 @@ public class Enemigo4 extends Enemigo{
 				float y = getY();
 				float altura = 50;
 				float anchura = 50;
-				Texture texturadisparo1 = new Texture("snorlax.png");
+				Texture texturadisparo1 = new Texture("bosslaser.png");
 				float difx = GameScreen.getPosXJugador() - (getX()+(getAnchura()/2));
 				float dify = GameScreen.getPosYJugador() - getY();
 				float unitario = (float) Math.sqrt(difx * difx + dify * dify);
