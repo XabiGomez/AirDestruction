@@ -1,9 +1,11 @@
-package entidades;
+package entidadesTest;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import entidades.Player;
 
 
 public class PlayerTest {
