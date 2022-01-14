@@ -151,17 +151,21 @@ class KeyboardProcessor extends InputAdapter {
 
 	
 	private void generarOleada() {
-		for(int i=0; i<numOleada; ++i) {
-			double x = Math.random()*100 + 1;
-			System.out.println(x);
-			if(x<propenem1) {
-				crearenem(1);
-			}else if(x<(propenem2+propenem1)&&x>=propenem1) {
-				crearenem(2);
-			}else if(x<(propenem2+propenem1+propenem3)&&x>=(propenem1+propenem2)) {
-				crearenem(3);
-			}else if(x<(propenem2+propenem1+propenem3+propenem4)&&x>=(propenem1+propenem2+propenem3)) {
-				crearenem(4);
+		if (numOleada%5==0 && numOleada!=10) {
+			crearenem(5);
+		}else {
+			for(int i=0; i<numOleada; ++i) {
+				double x = Math.random()*100 + 1;
+				System.out.println(x);
+				if(x<propenem1) {
+					crearenem(1);
+				}else if(x<(propenem2+propenem1)&&x>=propenem1) {
+					crearenem(2);
+				}else if(x<(propenem2+propenem1+propenem3)&&x>=(propenem1+propenem2)) {
+					crearenem(3);
+				}else if(x<(propenem2+propenem1+propenem3+propenem4)&&x>=(propenem1+propenem2+propenem3)) {
+					crearenem(4);
+				}
 			}
 		}
 		numOleada=2+numOleada;
@@ -197,6 +201,9 @@ class KeyboardProcessor extends InputAdapter {
 		case 4:
 			crearenem4();
 			break;
+		case 5:
+			crearenem5();
+			break;
 		default:
 			Gdx.app.error("Error", "no existe clase enemigo"); 
 			break;
@@ -230,7 +237,7 @@ class KeyboardProcessor extends InputAdapter {
 		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
 		float a = Gdx.graphics.getWidth()-tamXenempro;
 		float enemproX= (float) (Math.random()*(a));
-		enemigoprovisional = new Enemigo3(enemproX,enemproY,tamYenempro,tamXenempro,3,1,1,enem1,1,1);
+		enemigoprovisional = new Enemigo3(enemproX,enemproY,tamYenempro,tamXenempro,2,1,1,enem1,1,1);
 		enemigos.add(enemigoprovisional);
 		System.out.println(enemigoprovisional);
 		
@@ -241,7 +248,18 @@ class KeyboardProcessor extends InputAdapter {
 		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
 		float a = Gdx.graphics.getWidth()-tamXenempro;
 		float enemproX= (float) (Math.random()*(a));
-		enemigoprovisional = new Enemigo4(enemproX,enemproY,tamYenempro,tamXenempro,20,1,1,enem1,1,1);
+		enemigoprovisional = new Enemigo4(enemproX,enemproY,tamYenempro,tamXenempro,10,1,1,enem1,1,1);
+		enemigos.add(enemigoprovisional);
+		System.out.println(enemigoprovisional);
+		
+	}
+	public void crearenem5() {
+		Enemigo5 enemigoprovisional;
+		int tamXenempro = 300, tamYenempro = 80;
+		float enemproY= Gdx.graphics.getHeight()-(tamYenempro+50);
+		float a = Gdx.graphics.getWidth()-tamXenempro;
+		float enemproX= (float) (Math.random()*(a));
+		enemigoprovisional = new Enemigo5(enemproX,enemproY,tamYenempro,tamXenempro,20,1,1,enem1,1,1);
 		enemigos.add(enemigoprovisional);
 		System.out.println(enemigoprovisional);
 		
